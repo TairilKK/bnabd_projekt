@@ -1,5 +1,6 @@
 package com.example.wypozyczalnia;
 
+import com.example.wypozyczalnia.products.Product;
 import jakarta.persistence.*;
 
 import java.util.List;

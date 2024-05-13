@@ -1,8 +1,12 @@
-package com.example.wypozyczalnia;
+package com.example.wypozyczalnia.users;
 
+import com.example.wypozyczalnia.Client;
+import com.example.wypozyczalnia.Employee;
+import com.example.wypozyczalnia.PersonalData;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "_user")
 public class User {
 
     @Id
