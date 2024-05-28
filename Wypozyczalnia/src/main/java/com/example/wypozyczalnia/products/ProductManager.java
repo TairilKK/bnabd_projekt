@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @Service
 public class ProductManager {
-    ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
     public ProductManager(ProductRepository productRepository, UserRepository userRepository) {
         this.productRepository = productRepository;

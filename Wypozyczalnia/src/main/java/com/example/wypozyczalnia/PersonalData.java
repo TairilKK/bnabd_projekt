@@ -13,7 +13,6 @@ public class PersonalData {
     private String firstName;
     private String lastName;
     private String phoneNumber;
-    private String email;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "addressId", referencedColumnName = "addressId")
@@ -40,14 +39,6 @@ public class PersonalData {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public Address getAddress() {

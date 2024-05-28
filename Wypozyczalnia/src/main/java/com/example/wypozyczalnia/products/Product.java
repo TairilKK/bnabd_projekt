@@ -1,6 +1,6 @@
 package com.example.wypozyczalnia.products;
 
-import com.example.wypozyczalnia.Category;
+import com.example.wypozyczalnia.categories.Category;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
