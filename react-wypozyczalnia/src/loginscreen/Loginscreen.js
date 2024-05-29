@@ -7,6 +7,9 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 
+import { Link } from 'react-router-dom'
+
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Loginscreen = () => {
@@ -42,9 +45,11 @@ const Loginscreen = () => {
                                         </Button>
                                     </Col>
                                     <Col xs={12} md={5} className="mt-3 ps-2 pe-2">
-                                        <Button variant="light" type="submit" className="w-100">
-                                            Zarejestruj się
-                                        </Button>
+                                        <Link to="/register">
+                                            <Button variant="light" type="submit" className="w-100">
+                                                Zarejestruj się
+                                            </Button>
+                                        </Link>
                                     </Col>
                                 </Row>
                             </Form>
