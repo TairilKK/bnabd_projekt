@@ -20,9 +20,11 @@ const Loginscreen = () => {
         >
             <div className="d-flex justify-content-center align-items-center min-vh-100" style={{ background: 'linear-gradient(-15deg, #4a87a2, #86cce9)' }}>
                 <Container className="align-self-center py-5 px-4" style={{ backgroundColor: '#fff', borderRadius: '15px', maxWidth: '800px' }}>
-                    <Row className="justify-content-md-center mb-5 pt-4">
+                    <Row className="mb-5 pt-4">
                         <Col xs={12} md={5} className="text-center mb-4 mb-md-0">
-                            <Image src="/logo.png" className="img-fluid mb-3" style={{ maxWidth: '50%', height: 'auto' }}/>
+                            <Link to="/">
+                                <Image src="/logo.png" className="img-fluid mb-3" style={{ maxWidth: '50%', height: 'auto' }}/>
+                            </Link>
                             <h2>Zaloguj się</h2>
                         </Col>
 

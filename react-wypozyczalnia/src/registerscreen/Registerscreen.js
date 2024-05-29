@@ -7,6 +7,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 
+import { Link } from 'react-router-dom'
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Registerscreen = () => {
@@ -17,9 +19,11 @@ const Registerscreen = () => {
         >
             <div className="d-flex justify-content-center align-items-center min-vh-100" style={{ background: 'linear-gradient(-15deg, #4a87a2, #86cce9)' }}>
                 <Container className="align-self-center py-5 px-4" style={{ backgroundColor: '#fff', borderRadius: '15px', maxWidth: '800px' }}>
-                    <Row className="justify-content-md-center mb-5 pt-4">
+                    <Row className="mb-5 pt-4">
                         <Col xs={12} md={5} className="text-center mb-4 mb-md-0">
-                            <Image src="/logo.png" className="img-fluid mb-3" style={{ maxWidth: '85%', height: 'auto' }}/>
+                            <Link to="/">
+                                <Image src="/logo.png" className="img-fluid mb-3" style={{ maxWidth: '85%', height: 'auto' }}/>
+                            </Link>
                             <h2>Zarejestruj się</h2>
                         </Col>
 
@@ -59,19 +63,12 @@ const Registerscreen = () => {
                                     <Form.Label>Powtórz hasło:</Form.Label>
                                     <Form.Control type="password" placeholder="********" />
                                 </Form.Group>
-
-                                <Row className="justify-content-md-center">
-                                    <Col xs={12} md={5} className="mt-3 ps-2 pe-2">
-                                        <Button variant="info" type="submit" className="w-100">
-                                            Zarejestruj się
-                                        </Button>
-                                    </Col>
-                                    <Col xs={12} md={5} className="mt-3 ps-2 pe-2">
-                                        <Button variant="light" type="button" className="w-100">
-                                            Zaloguj się
-                                        </Button>
-                                    </Col>
-                                </Row>
+                                
+                                <Link to="/login">
+                                    <Button variant="info" type="submit" className="w-100 mt-4">
+                                        Zarejestruj się
+                                    </Button>
+                                </Link>
                             </Form>
                         </Col>
                     </Row>
