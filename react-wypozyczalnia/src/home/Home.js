@@ -1,12 +1,13 @@
-import { Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom'
+import ItemList from "../components/item/ItemList";
+import Navbar from "../components/navbar/Navbar";
 
 const Home = () => {
-    return ( <div>
-        <Link to="/login">
-            <Button variant="info" type="button" className="w-100">Zaloguj się</Button>
-        </Link>
-    </div> );
-}
- 
+  return (
+    <div>
+      <Navbar />
+      <ItemList />
+    </div>
+  );
+};
+
 export default Home;
