@@ -1,15 +1,12 @@
 import React from "react";
-import Button from "react-bootstrap/Button";
 import ThemeProvider from "react-bootstrap/ThemeProvider";
-import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Image from "react-bootstrap/Image";
-
-import { Link } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
+
+import RegisterForm from "./RegisterForm";
+import RegisterLeftPanel from "./RegisterLeftPanel";
 
 const Registerscreen = () => {
   return (
@@ -30,64 +27,8 @@ const Registerscreen = () => {
           }}
         >
           <Row className="mb-5 pt-4">
-            <Col xs={12} md={5} className="text-center mb-4 mb-md-0">
-              <Link to="/">
-                <Image
-                  src="/logo.svg"
-                  className="img-fluid mb-3"
-                  style={{ maxWidth: "85%", height: "auto" }}
-                />
-              </Link>
-              <h2>Zarejestruj się</h2>
-            </Col>
-
-            <Col xs={12} md={6}>
-              <Form>
-                <Row>
-                  <Col xs={12} md={6}>
-                    <Form.Group className="mb-3 ps-1 pe-1">
-                      <Form.Label>Imię:</Form.Label>
-                      <Form.Control type="text" placeholder="Imię" />
-                    </Form.Group>
-                  </Col>
-                  <Col xs={12} md={6}>
-                    <Form.Group className="mb-3 ps-1 pe-1">
-                      <Form.Label>Nazwisko:</Form.Label>
-                      <Form.Control type="text" placeholder="Nazwisko" />
-                    </Form.Group>
-                  </Col>
-                </Row>
-
-                <Form.Group className="mb-3 ps-1 pe-1">
-                  <Form.Label>Numer telefonu:</Form.Label>
-                  <Form.Control type="tel" placeholder="+48 123 456 789" />
-                </Form.Group>
-
-                <Form.Group className="mb-3 ps-1 pe-1">
-                  <Form.Label>Email:</Form.Label>
-                  <Form.Control
-                    type="email"
-                    placeholder="jan.kowalski@email.com"
-                  />
-                </Form.Group>
-
-                <Form.Group className="mb-3 ps-1 pe-1">
-                  <Form.Label>Hasło:</Form.Label>
-                  <Form.Control type="password" placeholder="********" />
-                </Form.Group>
-
-                <Form.Group className="mb-3 ps-1 pe-1">
-                  <Form.Label>Powtórz hasło:</Form.Label>
-                  <Form.Control type="password" placeholder="********" />
-                </Form.Group>
-
-                <Link to="/login">
-                  <Button variant="info" type="submit" className="w-100 mt-4">
-                    Zarejestruj się
-                  </Button>
-                </Link>
-              </Form>
-            </Col>
+            <RegisterLeftPanel />
+            <RegisterForm />
           </Row>
         </Container>
       </div>
