@@ -1,9 +1,12 @@
 package com.example.wypozyczalnia.products;
 
+import com.example.wypozyczalnia.Rent;
 import com.example.wypozyczalnia.categories.Category;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Optional;
 
 @Entity
 public class Product {
@@ -13,17 +16,21 @@ public class Product {
     private Long productId;
     private String brand;
     private String model;
-    private Double size;
+    private String size;
     private BigDecimal unitPrice;
     private Integer availability;
     private String conditionState;
-    private String comments;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "categoryId", referencedColumnName = "categoryId")
     private Category category;
 
-    protected Product() {
+    @OneToMany(mappedBy = "product")
+    private List<Rent> rents;
+
+    private String imagePath;
+
+    public Product() {
         super();
     }
 
@@ -51,11 +58,11 @@ public class Product {
         this.model = model;
     }
 
-    public Double getSize() {
+    public String getSize() {
         return size;
     }
 
-    public void setSize(Double size) {
+    public void setSize(String size) {
         this.size = size;
     }
 
@@ -75,19 +82,27 @@ public class Product {
         this.conditionState = conditionState;
     }
 
-    public String getComments() {
-        return comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
-
     public Category getCategory() {
         return category;
     }
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public BigDecimal getUnitPrice() {
+        return unitPrice;
+    }
+
+    public void setUnitPrice(BigDecimal unitPrice) {
+        this.unitPrice = unitPrice;
     }
 }

@@ -1,5 +1,6 @@
 package com.example.wypozyczalnia.products;
 
+import com.example.wypozyczalnia.categories.Category;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,8 +27,8 @@ public class ProductApi {
         return productManager.findByBrandOrderByAvailability(brand);
     }
 
-    @GetMapping("/{categoryID}")
-    public List<Product> getByCategory(@PathVariable("categoryID") Long categoryId) {
+    @GetMapping("/{category}")
+    public List<Product> getByCategory(@PathVariable("category") Category categoryId) {
         return productManager.findByCategory(categoryId);
     }
 }

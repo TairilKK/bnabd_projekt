@@ -13,12 +13,11 @@ public class Category {
     private Long categoryId;
 
     private String categoryName;
-    private String description;
 
     @OneToMany(mappedBy = "category")
     private List<Product> products;
 
-    protected Category() {
+    public Category() {
         super();
     }
 
@@ -36,13 +35,5 @@ public class Category {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 }

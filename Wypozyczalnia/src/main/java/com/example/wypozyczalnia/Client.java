@@ -3,6 +3,8 @@ package com.example.wypozyczalnia;
 import com.example.wypozyczalnia.users.User;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class Client {
 
@@ -14,8 +16,8 @@ public class Client {
     @JoinColumn(name = "userId", referencedColumnName = "userId")
     private User user;
 
-    @OneToOne(mappedBy = "client")
-    private Rent rent;
+    @OneToMany(mappedBy = "client")
+    private List<Rent> rents;
 
     protected Client() {
         super();

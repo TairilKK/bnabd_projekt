@@ -24,4 +24,7 @@ public class UserManager {
     public void delete(User user) {
         userRepository.delete(user);
     }
+    public Optional<User> FindByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
 }

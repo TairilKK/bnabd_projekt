@@ -14,10 +14,6 @@ public class PersonalData {
     private String lastName;
     private String phoneNumber;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "addressId", referencedColumnName = "addressId")
-    private Address address;
-
     @OneToOne(mappedBy = "personalData")
     private User user;
 
@@ -39,14 +35,6 @@ public class PersonalData {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
     }
 
     public String getFirstName() {

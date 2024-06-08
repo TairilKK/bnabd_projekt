@@ -1,5 +1,6 @@
 package com.example.wypozyczalnia;
 
+import com.example.wypozyczalnia.products.Product;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -11,19 +12,22 @@ public class Rent {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long rentId;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "clientId", referencedColumnName = "clientId")
     private Client client;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "employeeId", referencedColumnName = "employeeId")
     private Employee employee;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "productId", referencedColumnName = "productId")
+    private Product product;
 
     private Date rentStart;
     private Date rentEnd;
 
-    @OneToOne(mappedBy = "rent", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private RentDetails rentDetails;
+
 
     protected Rent() {
         super();

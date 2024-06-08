@@ -24,8 +24,7 @@ const ItemDetail = () => {
       <Container
         className="py-5 px-4"
         style={{
-          backgroundColor: "#fff",
-          maxWidth: "1400px",
+          backgroundColor: "#f0f0f0",
         }}
       >
         <Row className="mb-5 pt-4">

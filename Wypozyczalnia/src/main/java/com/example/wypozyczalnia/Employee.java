@@ -4,6 +4,7 @@ import com.example.wypozyczalnia.users.User;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 public class Employee {
@@ -17,8 +18,8 @@ public class Employee {
     @JoinColumn(name = "userId", referencedColumnName = "userId")
     private User user;
 
-    @OneToOne(mappedBy = "employee")
-    private Rent rent;
+    @OneToMany(mappedBy = "employee")
+    private List<Rent> rents;
 
     protected Employee() {
         super();

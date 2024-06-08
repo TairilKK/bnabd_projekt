@@ -1,5 +1,6 @@
 package com.example.wypozyczalnia.products;
 
+import com.example.wypozyczalnia.categories.Category;
 import com.example.wypozyczalnia.users.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,7 @@ public class ProductManager {
         productRepository.delete(product);
     }
 
-    public List<Product> findByCategory(Long categoryId) {
+    public List<Product> findByCategory(Category categoryId) {
         return productRepository.findByCategory(categoryId);
     }
 
@@ -41,7 +42,7 @@ public class ProductManager {
         return productRepository.findByModelOrderByAvailability(model);
     }
 
-    public List<Product> findBySizeOrderByAvailability(Double size){
+    public List<Product> findBySizeOrderByAvailability(String size){
         return productRepository.findBySizeOrderByAvailability(size);
     }
 }

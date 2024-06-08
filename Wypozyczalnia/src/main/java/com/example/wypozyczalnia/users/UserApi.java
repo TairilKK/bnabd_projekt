@@ -27,4 +27,8 @@ public class UserApi {
     public Optional<User> getId(@PathVariable("userId") Long id){
         return userManager.FindById(id);
     }
+    @GetMapping("/email")
+    public Optional<User> getUserByEmail(@RequestParam  String email){
+        return userManager.FindByEmail(email);
+    }
 }

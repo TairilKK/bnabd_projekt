@@ -9,11 +9,11 @@ const Navbar = () => {
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
           <Image
-            src="/logo.png"
+            src="/logo.svg"
             className="img-fluid mb-3"
             style={{
               maxWidth: "64px",
-              height: "auto",
+              height: "64px",
             }}
           />
         </Link>
