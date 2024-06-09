@@ -1,9 +1,9 @@
 package com.example.wypozyczalnia.users;
 
-import com.example.wypozyczalnia.Client;
-import com.example.wypozyczalnia.Employee;
-import com.example.wypozyczalnia.PersonalData;
+import com.example.wypozyczalnia.Rent;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "_user")
@@ -12,19 +12,18 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userId;
+    private String firstName;
+    private String lastName;
+    private String phoneNumber;
     private String email;
     private String password;
     private String role;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "pDataId", referencedColumnName = "pDataId")
-    private PersonalData personalData;
+    @OneToMany(mappedBy = "employee")
+    private List<Rent> rentsEmployee;
 
-    @OneToOne(mappedBy = "user")
-    private Employee employee;
-
-    @OneToOne(mappedBy = "user")
-    private Client client;
+    @OneToMany(mappedBy = "client")
+    private List<Rent> rentsClient;
 
     protected User() {
         super();
@@ -36,6 +35,29 @@ public class User {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getEmail() {

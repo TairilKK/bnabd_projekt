@@ -1,9 +1,11 @@
 package com.example.wypozyczalnia;
 
 import com.example.wypozyczalnia.products.Product;
+import com.example.wypozyczalnia.users.User;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Rent {
@@ -13,12 +15,12 @@ public class Rent {
     private Long rentId;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "clientId", referencedColumnName = "clientId")
-    private Client client;
+    @JoinColumn(name = "employeeId", referencedColumnName = "userId")
+    private User employee;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "employeeId", referencedColumnName = "employeeId")
-    private Employee employee;
+    @JoinColumn(name = "clientId", referencedColumnName = "userId")
+    private User client;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "productId", referencedColumnName = "productId")
@@ -41,21 +43,6 @@ public class Rent {
         this.rentId = rentId;
     }
 
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public Employee getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
 
     public Date getRentStart() {
         return rentStart;
