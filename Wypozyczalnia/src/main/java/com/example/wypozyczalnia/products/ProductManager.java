@@ -11,6 +11,15 @@ import java.util.Optional;
 public class ProductManager {
     private final ProductRepository productRepository;
 
+    public ProductDTO convertToDTO(Product product) {
+        return new ProductDTO(
+                product.getProductId(),
+                product.getBrand(),
+                product.getUnitPrice(),
+                product.getImagePath()
+        );
+    }
+
     public ProductManager(ProductRepository productRepository, UserRepository userRepository) {
         this.productRepository = productRepository;
     }

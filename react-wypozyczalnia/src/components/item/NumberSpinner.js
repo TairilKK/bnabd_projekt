@@ -11,7 +11,10 @@ const NumberSpinner = () => {
       }}
     >
       <InputGroup size="sm">
-        <Button variant="outline-secondary" onClick={() => setCount(count - 1)}>
+        <Button
+          variant="outline-secondary"
+          onClick={() => setCount(count === 0 ? 0 : count - 1)}
+        >
           -
         </Button>
         <FormControl

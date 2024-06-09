@@ -5,6 +5,7 @@ import Registerscreen from "./registerscreen/Registerscreen";
 import Home from "./home/Home";
 import ItemDetail from "./itemdetail/ItemDetail";
 import Order from "./order/Order";
+import EmployeeList from "./components/employeeList/EmployeeList";
 
 function App() {
   return (
@@ -19,8 +20,9 @@ function App() {
           <Route path="/" element={<Home />}></Route>
           <Route path="/login" element={<Loginscreen />}></Route>
           <Route path="/register" element={<Registerscreen />}></Route>
-          <Route path="/item" element={<ItemDetail />}></Route>
+          <Route path="/product/:id" element={<ItemDetail />}></Route>
           <Route path="/order" element={<Order />}></Route>
+          <Route path="/employee" element={<EmployeeList />}></Route>
         </Routes>
       </div>
     </Router>

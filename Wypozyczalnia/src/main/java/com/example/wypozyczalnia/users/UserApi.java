@@ -31,4 +31,6 @@ public class UserApi {
     public Optional<User> getUserByEmail(@RequestParam  String email){
         return userManager.FindByEmail(email);
     }
+
+
 }

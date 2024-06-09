@@ -21,7 +21,7 @@ public class Product {
     private Integer availability;
     private String conditionState;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "categoryId", referencedColumnName = "categoryId")
     private Category category;
 

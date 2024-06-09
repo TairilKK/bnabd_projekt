@@ -40,7 +40,7 @@ public class DataLoader implements CommandLineRunner {
             Category category = optionalCategory.get();
 
             Product p = new Product();
-            p.setImagePath("\\public\\img_products\\fischer_narty.jpg");
+            p.setImagePath("img_products/fischer_narty.jpg");
             p.setAvailability(44);
             p.setBrand("Fisher");
             p.setCategory(category);
