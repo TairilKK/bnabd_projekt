@@ -1,12 +1,11 @@
 package com.example.wypozyczalnia.products;
 
-import com.example.wypozyczalnia.Rent;
+import com.example.wypozyczalnia.rents.Rent;
 import com.example.wypozyczalnia.categories.Category;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 @Entity
 public class Product {

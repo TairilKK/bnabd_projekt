@@ -1,11 +1,10 @@
-package com.example.wypozyczalnia;
+package com.example.wypozyczalnia.rents;
 
 import com.example.wypozyczalnia.products.Product;
 import com.example.wypozyczalnia.users.User;
 import jakarta.persistence.*;
 
 import java.util.Date;
-import java.util.List;
 
 @Entity
 public class Rent {
@@ -37,6 +36,30 @@ public class Rent {
 
     public Long getRentId() {
         return rentId;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public User getClient() {
+        return client;
+    }
+
+    public void setClient(User client) {
+        this.client = client;
+    }
+
+    public User getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(User employee) {
+        this.employee = employee;
     }
 
     public void setRentId(Long rentId) {

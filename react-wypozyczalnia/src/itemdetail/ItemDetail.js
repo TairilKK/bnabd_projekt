@@ -53,9 +53,8 @@ const ItemDetail = () => {
             <h4 className="ms-5">
               {product.brand} {product.model}
             </h4>
-            <p> {product.imagePath}</p>
             <Image
-              src={product.imagePath}
+              src={"../" + product.imagePath}
               className="img-fluid p-3"
               style={{
                 height: "600px",

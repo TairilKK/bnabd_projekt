@@ -6,6 +6,7 @@ import Home from "./home/Home";
 import ItemDetail from "./itemdetail/ItemDetail";
 import Order from "./order/Order";
 import UserList from "./components/userList/UserList";
+import MyOrders from "./myorders/MyOrders";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/product/:id" element={<ItemDetail />}></Route>
           <Route path="/order" element={<Order />}></Route>
           <Route path="/employee" element={<UserList />}></Route>
+          <Route path="/myorders" element={<MyOrders />}></Route>
         </Routes>
       </div>
     </Router>

@@ -1,6 +1,6 @@
 package com.example.wypozyczalnia.users;
 
-import com.example.wypozyczalnia.Rent;
+import com.example.wypozyczalnia.rents.Rent;
 import jakarta.persistence.*;
 
 import java.util.List;
