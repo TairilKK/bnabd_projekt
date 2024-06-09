@@ -48,4 +48,18 @@ public class UserApi {
         return userManager.FindByEmailAndPassword(loginRequest.getEmail(), loginRequest.getPassword())
                 .orElseThrow(() -> new RuntimeException("Invalid email or password"));
     }
+
+    @PutMapping("/role/{userId}")
+    public User updateUserRole(@PathVariable Long userId, @RequestParam String role) {
+        System.out.println("Updating role for userId: " + userId + " to role: " + role); // Log for debugging
+        Optional<User> userOptional = userManager.FindById(userId);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setRole(role);
+            return userManager.save(user);
+        } else {
+            throw new RuntimeException("User not found");
+        }
+    }
+
 }

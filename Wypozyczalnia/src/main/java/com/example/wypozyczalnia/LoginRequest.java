@@ -5,8 +5,6 @@ public class LoginRequest {
     private String email;
     private String password;
 
-    // Gettery i settery
-
     public String getEmail() {
         return email;
     }
