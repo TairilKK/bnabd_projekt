@@ -18,10 +18,11 @@ const LoginForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8090/api/v1/users/login", formData)
+      .post("http://localhost:8090/api/v1/auth/authenticate", formData) // Upewnij się, że endpoint jest poprawny
       .then((response) => {
         console.log("Logged in:", response.data);
-        navigate("/home"); // Przekierowanie na stronę główną po zalogowaniu
+        localStorage.setItem("accessToken", response.data.accessToken); // Przechowywanie tokena
+        navigate("/"); // Przekierowanie na stronę główną po zalogowaniu
       })
       .catch((error) => {
         console.error("There was an error logging in!", error);

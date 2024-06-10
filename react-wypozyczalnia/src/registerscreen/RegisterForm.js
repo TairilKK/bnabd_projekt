@@ -10,7 +10,7 @@ const RegisterForm = () => {
     phoneNumber: "",
     email: "",
     password: "",
-    role: "Client", // Domyślna rola
+    role: "CLIENT", // Domyślna rola
   });
 
   const navigate = useNavigate();
@@ -22,7 +22,14 @@ const RegisterForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8090/api/v1/users/register", formData)
+      .post("http://localhost:8090/api/v1/auth/register", {
+        firstname: formData.firstName,
+        lastname: formData.lastName,
+        email: formData.email,
+        password: formData.password,
+        phonenumber: formData.phoneNumber,
+        role: formData.role,
+      })
       .then((response) => {
         console.log(response.data);
         navigate("/login");

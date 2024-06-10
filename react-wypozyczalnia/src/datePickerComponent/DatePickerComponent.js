@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import DatePicker, { registerLocale } from 'react-datepicker';
-import pl from 'date-fns/locale/pl';
+import React, { useState } from "react";
+import DatePicker, { registerLocale } from "react-datepicker";
+import pl from "date-fns/locale/pl";
 import "react-datepicker/dist/react-datepicker.css";
 
-registerLocale('pl', pl);
+registerLocale("pl", pl);
 
 const DatePickerComponent = () => {
-const [dateRange, setDateRange] = useState([null, null]);
+  const [dateRange, setDateRange] = useState([null, null]);
   const [startDate, endDate] = dateRange;
 
   return (
@@ -15,7 +15,7 @@ const [dateRange, setDateRange] = useState([null, null]);
       selectsRange={true}
       startDate={startDate}
       endDate={endDate}
-      onChange={update => {
+      onChange={(update) => {
         setDateRange(update);
         if (update[0] && update[1]) {
           setTimeout(() => setDateRange([null, null]), 2000); // Reset dat po 2 sekundach
@@ -25,6 +25,6 @@ const [dateRange, setDateRange] = useState([null, null]);
       inline
     />
   );
-}
+};
 
 export default DatePickerComponent;
