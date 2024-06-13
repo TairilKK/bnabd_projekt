@@ -1,0 +1,11 @@
+BnaBD:
+	- wyswietlanie wszystkich użytkonwików + oznaczanie pracowników
+	- wyswietlanie rezerwacji
+
+	- Navbar dla admina
+	- Navbar dla klienta
+
+	- dodawanie produktów
+	- dodawanie rezerwacji
+
+	- Dashbord

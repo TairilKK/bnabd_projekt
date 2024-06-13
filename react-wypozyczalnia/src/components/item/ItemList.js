@@ -9,15 +9,8 @@ const ItemList = () => {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const token =
-          "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJndWVzdEBtYWlsLmNvbSIsImlhdCI6MTcxODA0NTY1NSwiZXhwIjoxNzE4MTMyMDU1fQ.QS54YjSzgA-IAbb5d16IbLbSJYD7eC9lLrJkOFQY0NM";
         const response = await axios.get(
-          "http://localhost:8090/api/v1/products/all",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+          "http://localhost:8090/api/v1/products/all"
         );
         setItems(response.data);
       } catch (error) {

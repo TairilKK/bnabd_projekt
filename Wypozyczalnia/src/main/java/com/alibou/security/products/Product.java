@@ -2,11 +2,9 @@ package com.alibou.security.products;
 
 import com.alibou.security.categories.Category;
 import com.alibou.security.rents.Rent;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.List;

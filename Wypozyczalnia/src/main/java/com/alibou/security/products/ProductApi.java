@@ -23,8 +23,8 @@ public class ProductApi {
     }
 
     @GetMapping("/product")
-    public Optional<Product> FindProductById(@RequestParam("id")Long id) {
-        return productManager.FindProductById(id);
+    public Optional<ProductDetail> FindProductById(@RequestParam("id")Long id) {
+        return mapProductToProductDetail(productManager.FindProductById(id));
     }
 
     @GetMapping("/brand")
@@ -46,4 +46,16 @@ public class ProductApi {
                                 product.getImagePath()))
                 .collect(Collectors.toList());
     }
+    private Optional<ProductDetail> mapProductToProductDetail(Optional<Product> optionalProduct) {
+        return optionalProduct.map(
+                product -> new ProductDetail(
+                        product.getProductId(),
+                        product.getBrand(),
+                        product.getModel(),
+                        product.getSize(),
+                        product.getAvailability(),
+                        product.getUnitPrice(),
+                        product.getImagePath()));
+    }
+
 }

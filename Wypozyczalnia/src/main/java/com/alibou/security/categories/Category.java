@@ -2,12 +2,10 @@ package com.alibou.security.categories;
 
 import com.alibou.security.products.Product;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
