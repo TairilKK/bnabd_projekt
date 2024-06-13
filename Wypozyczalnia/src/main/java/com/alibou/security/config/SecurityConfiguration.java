@@ -1,5 +1,7 @@
 package com.alibou.security.config;
 
+import com.alibou.security.user.Permission;
+import com.alibou.security.user.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,16 +15,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 
-import static com.alibou.security.user.Permission.ADMIN_CREATE;
-import static com.alibou.security.user.Permission.ADMIN_DELETE;
-import static com.alibou.security.user.Permission.ADMIN_READ;
-import static com.alibou.security.user.Permission.ADMIN_UPDATE;
-import static com.alibou.security.user.Permission.MANAGER_CREATE;
-import static com.alibou.security.user.Permission.MANAGER_DELETE;
-import static com.alibou.security.user.Permission.MANAGER_READ;
-import static com.alibou.security.user.Permission.MANAGER_UPDATE;
-import static com.alibou.security.user.Role.ADMIN;
-import static com.alibou.security.user.Role.MANAGER;
 import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
@@ -55,15 +47,16 @@ public class SecurityConfiguration {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req ->
-                        req.requestMatchers(WHITE_LIST_URL)
-                                .permitAll()
-                                .requestMatchers("/api/v1/management/**").hasAnyRole(ADMIN.name(), MANAGER.name())
-                                .requestMatchers(GET, "/api/v1/management/**").hasAnyAuthority(ADMIN_READ.name(), MANAGER_READ.name())
-                                .requestMatchers(POST, "/api/v1/management/**").hasAnyAuthority(ADMIN_CREATE.name(), MANAGER_CREATE.name())
-                                .requestMatchers(PUT, "/api/v1/management/**").hasAnyAuthority(ADMIN_UPDATE.name(), MANAGER_UPDATE.name())
-                                .requestMatchers(DELETE, "/api/v1/management/**").hasAnyAuthority(ADMIN_DELETE.name(), MANAGER_DELETE.name())
-                                .anyRequest()
-                                .authenticated()
+                        req.requestMatchers(WHITE_LIST_URL).permitAll()
+                                .requestMatchers("/api/v1/employee/**").hasRole(Role.EMPLOYEE.name())
+                                .requestMatchers(GET, "/api/v1/employee/**").hasAuthority(Permission.EMPLOYEE_READ.name())
+                                .requestMatchers(POST, "/api/v1/employee/**").hasAuthority(Permission.EMPLOYEE_CREATE.name())
+                                .requestMatchers(PUT, "/api/v1/employee/**").hasAuthority(Permission.EMPLOYEE_UPDATE.name())
+                                .requestMatchers(DELETE, "/api/v1/employee/**").hasAuthority(Permission.EMPLOYEE_DELETE.name())
+                                .requestMatchers(GET, "/api/v1/client/**").hasAuthority(Permission.CLIENT_READ.name())
+                                .requestMatchers(PUT, "/api/v1/client/**").hasAuthority(Permission.CLIENT_UPDATE.name())
+                                .requestMatchers(GET, "/").permitAll()
+                                .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider)

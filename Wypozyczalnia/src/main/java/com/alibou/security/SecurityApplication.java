@@ -9,8 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
-import static com.alibou.security.user.Role.ADMIN;
-import static com.alibou.security.user.Role.MANAGER;
+import static com.alibou.security.user.Role.*;
 
 @SpringBootApplication
 @EnableJpaAuditing(auditorAwareRef = "auditorAware")
@@ -30,18 +29,27 @@ public class SecurityApplication {
 					.lastname("Admin")
 					.email("admin@mail.com")
 					.password("password")
-					.role(ADMIN)
+					.role(EMPLOYEE)
 					.build();
-			System.out.println("Admin token: " + service.register(admin).getAccessToken());
+			System.out.println("Employee token: " + service.register(admin).getAccessToken());
 
 			var manager = RegisterRequest.builder()
 					.firstname("Admin")
 					.lastname("Admin")
 					.email("manager@mail.com")
 					.password("password")
-					.role(MANAGER)
+					.role(CLIENT)
 					.build();
-			System.out.println("Manager token: " + service.register(manager).getAccessToken());
+			System.out.println("Client token: " + service.register(manager).getAccessToken());
+
+			var guest = RegisterRequest.builder()
+					.firstname("Guest")
+					.lastname("Guest")
+					.email("guest@mail.com")
+					.password("password")
+					.role(GUEST)
+					.build();
+			System.out.println("Guest token: " + service.register(guest).getAccessToken());
 
 		};
 	}
