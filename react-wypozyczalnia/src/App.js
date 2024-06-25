@@ -11,20 +11,15 @@ import MyOrders from "./myorders/MyOrders";
 function App() {
   return (
     <Router>
-      <div
-        className="App"
-        style={{
-          background: "linear-gradient(-15deg, #4a87a2, #86cce9)",
-        }}
-      >
+      <div>
         <Routes>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/login" element={<Loginscreen />}></Route>
-          <Route path="/register" element={<Registerscreen />}></Route>
-          <Route path="/product/:id" element={<ItemDetail />}></Route>
-          <Route path="/order" element={<Order />}></Route>
-          <Route path="/employee" element={<UserList />}></Route>
-          <Route path="/myorders" element={<MyOrders />}></Route>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Loginscreen />} />
+          <Route path="/register" element={<Registerscreen />} />
+          <Route path="/product/:id" element={<ItemDetail />} />
+          <Route path="/order" element={<Order />} />
+          <Route path="/employee" element={<UserList />} />
+          <Route path="/myorders" element={<MyOrders />} />
         </Routes>
       </div>
     </Router>

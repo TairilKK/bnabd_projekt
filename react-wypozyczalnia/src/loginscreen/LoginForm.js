@@ -1,14 +1,13 @@
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import apiClient from "../components/apiClient";
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -17,12 +16,21 @@ const LoginForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post("http://localhost:8090/api/v1/auth/authenticate", formData) // Upewnij się, że endpoint jest poprawny
+    apiClient
+      .post("/auth/authenticate", formData)
       .then((response) => {
         console.log("Logged in:", response.data);
-        localStorage.setItem("accessToken", response.data.accessToken); // Przechowywanie tokena
-        navigate("/"); // Przekierowanie na stronę główną po zalogowaniu
+        if (response.data.access_token) {
+          localStorage.setItem("token", response.data.access_token);
+          localStorage.setItem("role", response.data.user.role); // Zapisz rolę użytkownika
+          console.log(
+            "Token zapisany w localStorage:",
+            localStorage.getItem("token")
+          );
+          navigate("/");
+        } else {
+          console.error("No access token found in response");
+        }
       })
       .catch((error) => {
         console.error("There was an error logging in!", error);
@@ -42,7 +50,6 @@ const LoginForm = () => {
             onChange={handleChange}
           />
         </Form.Group>
-
         <Form.Group className="mb-3 ps-1 pe-1">
           <Form.Label>Hasło:</Form.Label>
           <Form.Control
@@ -53,7 +60,6 @@ const LoginForm = () => {
             onChange={handleChange}
           />
         </Form.Group>
-
         <Row className="justify-content-md-center">
           <Col xs={12} md={5} className="mt-3 ps-2 pe-2">
             <Button variant="info" type="submit" className="w-100">

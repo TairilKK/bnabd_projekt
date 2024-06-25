@@ -39,14 +39,14 @@ public class JwtService {
   }
 
   public String generateToken(
-      Map<String, Object> extraClaims,
-      UserDetails userDetails
+          Map<String, Object> extraClaims,
+          UserDetails userDetails
   ) {
     return buildToken(extraClaims, userDetails, jwtExpiration);
   }
 
   public String generateRefreshToken(
-      UserDetails userDetails
+          UserDetails userDetails
   ) {
     return buildToken(new HashMap<>(), userDetails, refreshExpiration);
   }
@@ -81,11 +81,11 @@ public class JwtService {
 
   private Claims extractAllClaims(String token) {
     return Jwts
-        .parserBuilder()
-        .setSigningKey(getSignInKey())
-        .build()
-        .parseClaimsJws(token)
-        .getBody();
+            .parserBuilder()
+            .setSigningKey(getSignInKey())
+            .build()
+            .parseClaimsJws(token)
+            .getBody();
   }
 
   private Key getSignInKey() {

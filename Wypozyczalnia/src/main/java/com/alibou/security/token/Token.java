@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Data
 @Builder
@@ -24,19 +25,31 @@ public class Token {
 
   @Id
   @GeneratedValue
-  public Integer id;
+  private Integer id;
 
   @Column(unique = true)
-  public String token;
+  private String token;
 
   @Enumerated(EnumType.STRING)
-  public TokenType tokenType = TokenType.BEARER;
+  private TokenType tokenType = TokenType.BEARER;
 
-  public boolean revoked;
+  private boolean revoked;
 
-  public boolean expired;
+  private boolean expired;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id")
-  public User user;
+  @JsonBackReference
+  private User user;
+
+  @Override
+  public String toString() {
+    return "Token{" +
+            "id=" + id +
+            ", token='" + token + '\'' +
+            ", tokenType=" + tokenType +
+            ", revoked=" + revoked +
+            ", expired=" + expired +
+            '}';
+  }
 }

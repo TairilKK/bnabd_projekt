@@ -16,8 +16,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Data
 @Builder
@@ -40,13 +40,15 @@ public class User implements UserDetails {
   private Role role;
 
   @OneToMany(mappedBy = "employee")
+  @JsonManagedReference
   private List<Rent> rentsEmployee;
 
   @OneToMany(mappedBy = "client")
+  @JsonManagedReference
   private List<Rent> rentsClient;
 
-
   @OneToMany(mappedBy = "user")
+  @JsonManagedReference
   private List<Token> tokens;
 
   @Override
@@ -82,5 +84,17 @@ public class User implements UserDetails {
   @Override
   public boolean isEnabled() {
     return true;
+  }
+
+  @Override
+  public String toString() {
+    return "User{" +
+            "id=" + id +
+            ", firstName='" + firstName + '\'' +
+            ", lastName='" + lastName + '\'' +
+            ", email='" + email + '\'' +
+            ", phoneNumber='" + phoneNumber + '\'' +
+            ", role=" + role +
+            '}';
   }
 }

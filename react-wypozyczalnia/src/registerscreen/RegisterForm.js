@@ -10,33 +10,82 @@ const RegisterForm = () => {
     phoneNumber: "",
     email: "",
     password: "",
-    role: "CLIENT", // Domyślna rola
+    confirmPassword: "",
+    role: "CLIENT",
   });
 
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const validate = () => {
+    const errors = {};
+    const nameRegex = /^[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$/;
+    const phoneRegex = /^\+48 \d{3} \d{3} \d{3}$/;
+
+    if (!formData.firstName) {
+      errors.firstName = "Imię jest wymagane";
+    } else if (!nameRegex.test(formData.firstName)) {
+      errors.firstName = "Imię może zawierać tylko litery";
+    }
+
+    if (!formData.lastName) {
+      errors.lastName = "Nazwisko jest wymagane";
+    } else if (!nameRegex.test(formData.lastName)) {
+      errors.lastName = "Nazwisko może zawierać tylko litery";
+    }
+
+    if (!formData.phoneNumber) {
+      errors.phoneNumber = "Numer telefonu jest wymagany";
+    } else if (!phoneRegex.test(formData.phoneNumber)) {
+      errors.phoneNumber = "Numer telefonu musi być w formacie +48 123 456 789";
+    }
+
+    if (!formData.email) {
+      errors.email = "Email jest wymagany";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      errors.email = "Email jest nieprawidłowy";
+    }
+
+    if (!formData.password) {
+      errors.password = "Hasło jest wymagane";
+    }
+
+    if (!formData.confirmPassword) {
+      errors.confirmPassword = "Potwierdzenie hasła jest wymagane";
+    } else if (formData.password !== formData.confirmPassword) {
+      errors.confirmPassword = "Hasła nie są zgodne";
+    }
+
+    return errors;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post("http://localhost:8090/api/v1/auth/register", {
-        firstname: formData.firstName,
-        lastname: formData.lastName,
-        email: formData.email,
-        password: formData.password,
-        phonenumber: formData.phoneNumber,
-        role: formData.role,
-      })
-      .then((response) => {
-        console.log(response.data);
-        navigate("/login");
-      })
-      .catch((error) => {
-        console.error("There was an error registering!", error);
-      });
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+    } else {
+      axios
+        .post("http://localhost:8090/api/v1/auth/register", {
+          firstname: formData.firstName,
+          lastname: formData.lastName,
+          email: formData.email,
+          password: formData.password,
+          phonenumber: formData.phoneNumber,
+          role: formData.role,
+        })
+        .then((response) => {
+          console.log(response.data);
+          navigate("/login");
+        })
+        .catch((error) => {
+          console.error("There was an error registering!", error);
+        });
+    }
   };
 
   return (
@@ -52,7 +101,11 @@ const RegisterForm = () => {
                 name="firstName"
                 value={formData.firstName}
                 onChange={handleChange}
+                isInvalid={!!errors.firstName}
               />
+              <Form.Control.Feedback type="invalid">
+                {errors.firstName}
+              </Form.Control.Feedback>
             </Form.Group>
           </Col>
           <Col xs={12} md={6}>
@@ -64,7 +117,11 @@ const RegisterForm = () => {
                 name="lastName"
                 value={formData.lastName}
                 onChange={handleChange}
+                isInvalid={!!errors.lastName}
               />
+              <Form.Control.Feedback type="invalid">
+                {errors.lastName}
+              </Form.Control.Feedback>
             </Form.Group>
           </Col>
         </Row>
@@ -77,7 +134,11 @@ const RegisterForm = () => {
             name="phoneNumber"
             value={formData.phoneNumber}
             onChange={handleChange}
+            isInvalid={!!errors.phoneNumber}
           />
+          <Form.Control.Feedback type="invalid">
+            {errors.phoneNumber}
+          </Form.Control.Feedback>
         </Form.Group>
 
         <Form.Group className="mb-3 ps-1 pe-1">
@@ -88,7 +149,11 @@ const RegisterForm = () => {
             name="email"
             value={formData.email}
             onChange={handleChange}
+            isInvalid={!!errors.email}
           />
+          <Form.Control.Feedback type="invalid">
+            {errors.email}
+          </Form.Control.Feedback>
         </Form.Group>
 
         <Form.Group className="mb-3 ps-1 pe-1">
@@ -99,7 +164,11 @@ const RegisterForm = () => {
             name="password"
             value={formData.password}
             onChange={handleChange}
+            isInvalid={!!errors.password}
           />
+          <Form.Control.Feedback type="invalid">
+            {errors.password}
+          </Form.Control.Feedback>
         </Form.Group>
 
         <Form.Group className="mb-3 ps-1 pe-1">
@@ -110,7 +179,11 @@ const RegisterForm = () => {
             name="confirmPassword"
             value={formData.confirmPassword}
             onChange={handleChange}
+            isInvalid={!!errors.confirmPassword}
           />
+          <Form.Control.Feedback type="invalid">
+            {errors.confirmPassword}
+          </Form.Control.Feedback>
         </Form.Group>
 
         <Button variant="info" type="submit" className="w-100 mt-4">

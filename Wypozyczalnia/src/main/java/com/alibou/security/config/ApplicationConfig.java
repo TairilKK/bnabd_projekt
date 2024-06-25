@@ -2,7 +2,6 @@ package com.alibou.security.config;
 
 import com.alibou.security.auditing.ApplicationAuditAware;
 import com.alibou.security.user.UserRepository;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,7 +24,7 @@ public class ApplicationConfig {
   @Bean
   public UserDetailsService userDetailsService() {
     return username -> repository.findByEmail(username)
-        .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+            .orElseThrow(() -> new UsernameNotFoundException("User not found"));
   }
 
   @Bean
