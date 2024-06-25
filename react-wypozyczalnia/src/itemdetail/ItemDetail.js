@@ -9,7 +9,7 @@ import NumberSpinner from "../components/item/NumberSpinner";
 import axios from "axios";
 
 const ItemDetail = () => {
-  const { id } = useParams(); // Pobranie ID z URL
+  const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);

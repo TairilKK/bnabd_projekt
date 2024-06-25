@@ -4,6 +4,7 @@ import com.alibou.security.categories.Category;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -33,8 +34,10 @@ public class ProductApi {
     }
 
     @GetMapping("/category")
-    public List<Product> getByCategory(@RequestParam("category") Category categoryId) {
-        return productManager.findByCategory(categoryId);
+    public List<ProductDTO> getByCategory(@RequestParam("categoryName") String categoryName) {
+        if(Objects.equals(categoryName, "WSZYSTKIE"))
+            return mapProductToProductRecord(productManager.FindAllProducts());
+        return mapProductToProductRecord(productManager.findByCategory(categoryName));
     }
 
     private List<ProductDTO> mapProductToProductRecord(List<Product> products) {
@@ -43,6 +46,7 @@ public class ProductApi {
                                 product.getProductId(),
                                 product.getBrand(),
                                 product.getUnitPrice(),
+                                product.getSize(),
                                 product.getImagePath()))
                 .collect(Collectors.toList());
     }
