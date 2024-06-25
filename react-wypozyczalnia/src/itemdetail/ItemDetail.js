@@ -53,16 +53,25 @@ const ItemDetail = () => {
             <h4 className="ms-5">
               {product.brand} {product.model}
             </h4>
-            <Image
-              src={"../" + product.imagePath}
-              className="img-fluid p-3"
+            <div
               style={{
-                height: "600px",
-                width: "600px",
-                maxWidth: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "#fff",
               }}
-              alt="Card image cap"
-            />
+            >
+              <Image
+                src={"../" + product.imagePath}
+                className="img-fluid p-3"
+                style={{
+                  maxHeight: "600px",
+                  width: "auto",
+                  maxWidth: "100%",
+                }}
+                alt="Card image cap"
+              />
+            </div>
           </Col>
           <Col xs={5} md={2} className="ms-5 mb-4 mb-md-0">
             <ListGroup variant="flush">

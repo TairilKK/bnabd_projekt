@@ -21,6 +21,7 @@ public class Product {
     private String brand;
     private String model;
     private String size;
+    private String type;
     private BigDecimal unitPrice;
     private Integer availability;
     private String conditionState;

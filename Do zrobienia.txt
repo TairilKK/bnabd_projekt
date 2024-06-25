@@ -9,3 +9,6 @@ BnaBD:
 	- dodawanie rezerwacji
 
 	- Dashbord
+
+	- typy nart
+	- rekomendowanie

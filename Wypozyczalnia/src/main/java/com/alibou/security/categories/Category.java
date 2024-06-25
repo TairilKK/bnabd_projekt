@@ -12,7 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 public class Category {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long categoryId;
