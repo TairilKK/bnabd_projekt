@@ -1,24 +1,39 @@
 import { Image } from "react-bootstrap";
 import { Button, Dropdown, DropdownButton } from "react-bootstrap";
-import { Link, useLocation } from "react-router-dom";
-import { FaUser } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  FaUser,
+  FaShoppingCart,
+  FaClipboardList,
+  FaUsers,
+} from "react-icons/fa";
+import { useState, useEffect } from "react";
 
 const Navbar = () => {
-  const location = useLocation();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [role, setRole] = useState(null);
+  const navigate = useNavigate();
 
-  const getPageTitle = () => {
-    switch (location.pathname) {
-      case "/":
-        return "Strona główna";
-      case "/login":
-        return "Logowanie";
-      case "/register":
-        return "Rejestracja";
-      case location.pathname.startsWith("/product/"):
-        return "Rezerwacja";
-      default:
-        return "";
-    }
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const userRole = localStorage.getItem("role");
+    setIsAuthenticated(!!token);
+    setRole(userRole);
+  }, []);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const userRole = localStorage.getItem("role");
+    setIsAuthenticated(!!token);
+    setRole(userRole);
+  }, [isAuthenticated]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    setIsAuthenticated(false);
+    setRole(null);
+    navigate("/");
   };
 
   return (
@@ -33,34 +48,71 @@ const Navbar = () => {
               height: "64px",
             }}
           />
-          <span className="ms-2">{getPageTitle()}</span>
         </Link>
-        <div className="ms-auto">
+        <div className="ms-auto d-flex align-items-center">
+          {role === "CLIENT" && (
+            <Link to="/myorders" className="m-3">
+              <FaShoppingCart size={24} className="text-dark" />
+            </Link>
+          )}
+          {role === "EMPLOYEE" && (
+            <>
+              <Link to="/order" className="m-3">
+                <FaClipboardList size={24} className="text-dark" />
+              </Link>
+              <Link to="/employee" className="m-3">
+                <FaUsers size={24} className="text-dark" />
+              </Link>
+            </>
+          )}
           <DropdownButton
             id="dropdown-basic-button"
             title={
               <span>
-                <FaUser />
+                <FaUser className="text-dark" />
               </span>
             }
             variant="btn-outline-dark"
             size="lg"
             className="m-3"
           >
-            <Dropdown.Item as="div">
-              <Link to="/login">
-                <Button variant="navbar-brand" type="button" className="w-100">
-                  Zaloguj się
+            {isAuthenticated ? (
+              <Dropdown.Item as="div">
+                <Button
+                  variant="navbar-brand"
+                  type="button"
+                  className="w-100"
+                  onClick={handleLogout}
+                >
+                  Wyloguj się
                 </Button>
-              </Link>
-            </Dropdown.Item>
-            <Dropdown.Item as="div">
-              <Link to="/register">
-                <Button variant="navbar-brand" type="button" className="w-100">
-                  Zarejestruj się
-                </Button>
-              </Link>
-            </Dropdown.Item>
+              </Dropdown.Item>
+            ) : (
+              <>
+                <Dropdown.Item as="div">
+                  <Link to="/login">
+                    <Button
+                      variant="navbar-brand"
+                      type="button"
+                      className="w-100"
+                    >
+                      Zaloguj się
+                    </Button>
+                  </Link>
+                </Dropdown.Item>
+                <Dropdown.Item as="div">
+                  <Link to="/register">
+                    <Button
+                      variant="navbar-brand"
+                      type="button"
+                      className="w-100"
+                    >
+                      Zarejestruj się
+                    </Button>
+                  </Link>
+                </Dropdown.Item>
+              </>
+            )}
           </DropdownButton>
         </div>
       </div>
