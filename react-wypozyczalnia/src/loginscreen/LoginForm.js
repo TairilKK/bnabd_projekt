@@ -1,9 +1,11 @@
 import { Button, Col, Form, Row } from "react-bootstrap";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { UserContext } from "../contexts/UserContext";
 
 const LoginForm = () => {
+  const { setUser } = useContext(UserContext);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -17,15 +19,29 @@ const LoginForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("Sending login request with data:", formData);
     axios
-      .post("http://localhost:8090/api/v1/auth/authenticate", formData) // Upewnij się, że endpoint jest poprawny
+      .post("http://localhost:8090/api/v1/auth/authenticate", formData)
       .then((response) => {
         console.log("Logged in:", response.data);
-        localStorage.setItem("accessToken", response.data.accessToken); // Przechowywanie tokena
-        navigate("/"); // Przekierowanie na stronę główną po zalogowaniu
+        const user = response.data.user;
+        localStorage.setItem("accessToken", response.data.accessToken);
+        localStorage.setItem("user", JSON.stringify(user));
+        setUser(user);
+        console.log("User set in context:", user);
+        navigate("/");
       })
       .catch((error) => {
         console.error("There was an error logging in!", error);
+        if (error.response) {
+          console.error("Error response data:", error.response.data);
+          console.error("Error response status:", error.response.status);
+          console.error("Error response headers:", error.response.headers);
+        } else if (error.request) {
+          console.error("Error request data:", error.request);
+        } else {
+          console.error("Error message:", error.message);
+        }
       });
   };
 
