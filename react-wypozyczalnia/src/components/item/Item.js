@@ -7,7 +7,12 @@ const Item = ({ id, title, text, size, imgSrc }) => {
   return (
     <div className="card h-100 d-flex flex-column">
       <Link to={`/product/${id}`} className="d-flex flex-column h-100">
-        <div className="image-container">
+        <div
+          className="image-container"
+          style={{
+            height: "286px",
+          }}
+        >
           <Image
             className="card-img-top"
             src={imgSrc}

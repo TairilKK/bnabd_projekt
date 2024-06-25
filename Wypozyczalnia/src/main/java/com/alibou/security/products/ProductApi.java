@@ -1,10 +1,8 @@
 package com.alibou.security.products;
 
-import com.alibou.security.categories.Category;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -12,7 +10,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/products")
 @CrossOrigin(origins = "http://localhost:3000")
 public class ProductApi {
-    private ProductManager productManager;
+    private final ProductManager productManager;
 
     public ProductApi(ProductManager productManager) {
         this.productManager = productManager;
@@ -23,21 +21,38 @@ public class ProductApi {
         return mapProductToProductRecord(productManager.FindAllProducts());
     }
 
+    @GetMapping("/allbrands")
+    public List<String> findAllBrands() {
+        return productManager.findDistinctBrands();
+    }
+
     @GetMapping("/product")
     public Optional<ProductDetail> FindProductById(@RequestParam("id")Long id) {
         return mapProductToProductDetail(productManager.FindProductById(id));
     }
 
     @GetMapping("/brand")
-    public List<Product> getByBrand(@RequestParam("brandName") String brand) {
-        return productManager.findByBrandOrderByAvailability(brand);
+    public List<ProductDTO> getByBrand(@RequestParam("brandName") String brand) {
+        return mapProductToProductRecord(productManager.findByBrand(brand));
     }
 
     @GetMapping("/category")
     public List<ProductDTO> getByCategory(@RequestParam("categoryName") String categoryName) {
-        if(Objects.equals(categoryName, "WSZYSTKIE"))
+        if(categoryName.equalsIgnoreCase("WSZYSTKIE"))
             return mapProductToProductRecord(productManager.FindAllProducts());
         return mapProductToProductRecord(productManager.findByCategory(categoryName));
+    }
+
+    @GetMapping("/filter")
+    public List<ProductDTO> getByBrandAndCategory(@RequestParam("categoryName") String categoryName, @RequestParam("brandName") String brand){
+        if(categoryName.equalsIgnoreCase("WSZYSTKIE") && brand.equalsIgnoreCase("WSZYSTKIE"))
+            return mapProductToProductRecord(productManager.FindAllProducts());
+        else if (categoryName.equalsIgnoreCase("WSZYSTKIE"))
+            return mapProductToProductRecord(productManager.findByBrand(brand));
+        else if (brand.equalsIgnoreCase("WSZYSTKIE"))
+            return mapProductToProductRecord(productManager.findByCategory(categoryName));
+        else
+            return mapProductToProductRecord(productManager.findByCategoryAndBrand(categoryName, brand));
     }
 
     private List<ProductDTO> mapProductToProductRecord(List<Product> products) {

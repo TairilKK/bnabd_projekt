@@ -1,14 +1,14 @@
 BnaBD:
 	- wyswietlanie wszystkich użytkonwików + oznaczanie pracowników
 	- wyswietlanie rezerwacji
-
 	- Navbar dla admina
 	- Navbar dla klienta
-
 	- dodawanie produktów
 	- dodawanie rezerwacji
-
 	- Dashbord
-
 	- typy nart
 	- rekomendowanie
+	
+	
+Dzisiaj:
+	Dodać order by cena
