@@ -1,6 +1,6 @@
 import { Image } from "react-bootstrap";
 import { Button, Dropdown, DropdownButton } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
   FaUser,
   FaShoppingCart,
@@ -13,6 +13,7 @@ const Navbar = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [role, setRole] = useState(null);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -36,19 +37,37 @@ const Navbar = () => {
     navigate("/");
   };
 
+  const getPageName = () => {
+    switch (location.pathname) {
+      case "/":
+        return "Strona główna";
+      case "/myorders":
+        return "Moje zamówienia";
+      case "/order":
+        return "Zamówienia";
+      case "/employee":
+        return "Lista użytkowników";
+      default:
+        return "";
+    }
+  };
+
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
-      <div className="container-fluid d-flex align-items-center">
-        <Link className="navbar-brand d-flex align-items-center" to="/">
-          <Image
-            src="/logo.svg"
-            className="img-fluid mb-3"
-            style={{
-              maxWidth: "64px",
-              height: "64px",
-            }}
-          />
-        </Link>
+      <div className="container-fluid d-flex align-items-center justify-content-between">
+        <div className="d-flex align-items-center">
+          <Link className="navbar-brand d-flex align-items-center" to="/">
+            <Image
+              src="/logo.svg"
+              className="img-fluid mb-3"
+              style={{
+                maxWidth: "64px",
+                height: "64px",
+              }}
+            />
+          </Link>
+          <span className="ms-3">{getPageName()}</span>
+        </div>
         <div className="ms-auto d-flex align-items-center">
           {role === "CLIENT" && (
             <Link to="/myorders" className="m-3">
