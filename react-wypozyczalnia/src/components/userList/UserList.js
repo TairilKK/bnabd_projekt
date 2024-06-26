@@ -1,36 +1,47 @@
 import Navbar from "../navbar/Navbar";
 import { Container, ListGroup, Row, Form } from "react-bootstrap";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import apiClient from "../apiClient";
 import UserCard from "./UserCard";
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
+  const [currentUserEmail, setCurrentUserEmail] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:8090/api/v1/users/all")
+    const token = localStorage.getItem("token");
+    const decodedToken = parseJwt(token); // Function to decode JWT
+    setCurrentUserEmail(decodedToken.sub);
+
+    apiClient
+      .get("/users/all", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok " + response.statusText);
-        }
-        return response.json();
+        setUsers(response.data);
       })
-      .then((data) => {
-        console.log("Fetched users:", data); // Logowanie dla debugowania
-        setUsers(data);
-      })
-      .catch((error) => console.error("Error fetching users:", error));
+      .catch((error) => {
+        console.error("Error fetching users:", error);
+      });
   }, []);
 
   const handleRoleChange = (userId, currentRole) => {
-    const newRole = currentRole === "Employee" ? "Client" : "Employee";
-    axios
-      .put(`http://localhost:8090/api/v1/users/role/${userId}?role=${newRole}`)
+    const newRole = currentRole === "EMPLOYEE" ? "CLIENT" : "EMPLOYEE";
+    const token = localStorage.getItem("token");
+
+    apiClient
+      .put(`/users/role/${userId}?role=${newRole}`, null, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
-        console.log("Role updated successfully:", response.data); // Log for debugging
+        console.log("Role updated successfully:", response.data);
         setUsers((prevUsers) =>
           prevUsers.map((user) =>
-            user.userId === userId ? { ...user, role: newRole } : user
+            user.id === userId ? { ...user, role: newRole } : user
           )
         );
       })
@@ -70,9 +81,10 @@ const UserList = () => {
               lastName={usr.lastName}
               email={usr.email}
               role={usr.role}
-              userId={usr.userId}
-              isEmployee={usr.role === "Employee"}
+              userId={usr.id}
+              isEmployee={usr.role === "EMPLOYEE"}
               onSwitchChange={handleRoleChange}
+              currentUserEmail={currentUserEmail} // Pass current user's email
             />
           ))}
         </Row>
@@ -95,8 +107,9 @@ const UserList = () => {
               <Form.Check
                 type="switch"
                 id={`switch-${usr.email}`}
-                checked={usr.role === "Employee"}
-                onChange={() => handleRoleChange(usr.userId, usr.role)}
+                checked={usr.role === "EMPLOYEE"}
+                onChange={() => handleRoleChange(usr.id, usr.role)}
+                disabled={usr.email === currentUserEmail} // Disable switch if it's the current user's email
               />
             </ListGroup.Item>
           </ListGroup>
@@ -113,3 +126,18 @@ const flexStyle = {
 };
 
 export default UserList;
+
+function parseJwt(token) {
+  var base64Url = token.split(".")[1];
+  var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+  var jsonPayload = decodeURIComponent(
+    atob(base64)
+      .split("")
+      .map(function (c) {
+        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+      })
+      .join("")
+  );
+
+  return JSON.parse(jsonPayload);
+}

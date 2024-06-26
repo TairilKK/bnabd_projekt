@@ -9,6 +9,7 @@ const UserCard = ({
   userId,
   isEmployee,
   onSwitchChange,
+  currentUserEmail,
 }) => {
   const handleSwitchChange = () => {
     onSwitchChange(userId, role);
@@ -27,6 +28,7 @@ const UserCard = ({
             id={`switch-${email}`}
             checked={isEmployee}
             onChange={handleSwitchChange}
+            disabled={email === currentUserEmail}
           />
         </div>
       </div>

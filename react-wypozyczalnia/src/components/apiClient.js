@@ -3,9 +3,9 @@ import axios from "axios";
 // Tworzenie instancji axios z podstawową konfiguracją
 const apiClient = axios.create({
   baseURL: "http://localhost:8090/api/v1",
-  headers: {
-    "Content-Type": "application/json",
-  },
+  // headers: {
+  //   "Content-Type": "application/json",
+  // },
 });
 
 // Dodawanie tokenu do nagłówków
