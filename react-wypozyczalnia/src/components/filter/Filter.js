@@ -2,7 +2,7 @@ import { Container, Row, Col, Form } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const Filter = ({ category, setCategory, brand, setBrand }) => {
+const Filter = ({ category, setCategory, brand, setBrand, sort, setSort }) => {
   const [categoryNames, setCategoryNames] = useState(["WSZYSTKIE"]);
   const [brandNames, setBrandNames] = useState(["WSZYSTKIE"]);
 
@@ -42,6 +42,10 @@ const Filter = ({ category, setCategory, brand, setBrand }) => {
     setBrand(e.target.value);
   };
 
+  const handleSortChange = (e) => {
+    setSort(e.target.value);
+  };
+
   return (
     <Container>
       <Form>
@@ -76,6 +80,22 @@ const Filter = ({ category, setCategory, brand, setBrand }) => {
                     {name}
                   </option>
                 ))}
+              </Form.Control>
+            </Form.Group>
+          </Col>
+
+          <Col>
+            <Form.Group controlId="sortSelect">
+              <Form.Label>Sortowanie:</Form.Label>
+              <Form.Control
+                as="select"
+                value={sort}
+                onChange={handleSortChange}
+              >
+                <option value="brand,asc">Nazwa rosnąco</option>
+                <option value="brand,desc">Nazwa malejąco</option>
+                <option value="unitPrice,asc">Cena rosnąco</option>
+                <option value="unitPrice,desc">Cena malejąco</option>
               </Form.Control>
             </Form.Group>
           </Col>

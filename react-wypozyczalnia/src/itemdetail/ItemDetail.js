@@ -59,6 +59,7 @@ const ItemDetail = () => {
                 justifyContent: "center",
                 alignItems: "center",
                 backgroundColor: "#fff",
+                minHeight: "500px",
               }}
             >
               <Image

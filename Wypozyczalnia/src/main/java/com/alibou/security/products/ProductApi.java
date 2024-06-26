@@ -1,6 +1,11 @@
 package com.alibou.security.products;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,11 +21,6 @@ public class ProductApi {
         this.productManager = productManager;
     }
 
-    @GetMapping("/all")
-    public List<ProductDTO> getAll() {
-        return mapProductToProductRecord(productManager.FindAllProducts());
-    }
-
     @GetMapping("/allbrands")
     public List<String> findAllBrands() {
         return productManager.findDistinctBrands();
@@ -31,28 +31,30 @@ public class ProductApi {
         return mapProductToProductDetail(productManager.FindProductById(id));
     }
 
-    @GetMapping("/brand")
-    public List<ProductDTO> getByBrand(@RequestParam("brandName") String brand) {
-        return mapProductToProductRecord(productManager.findByBrand(brand));
-    }
-
-    @GetMapping("/category")
-    public List<ProductDTO> getByCategory(@RequestParam("categoryName") String categoryName) {
-        if(categoryName.equalsIgnoreCase("WSZYSTKIE"))
-            return mapProductToProductRecord(productManager.FindAllProducts());
-        return mapProductToProductRecord(productManager.findByCategory(categoryName));
-    }
-
     @GetMapping("/filter")
-    public List<ProductDTO> getByBrandAndCategory(@RequestParam("categoryName") String categoryName, @RequestParam("brandName") String brand){
+    public Page<ProductDTO> getByBrandAndCategory(@RequestParam("categoryName") String categoryName,
+                                                  @RequestParam("brandName") String brand,
+                                                  @RequestParam(value = "sort", required = false) String sort,
+                                                  @RequestParam(value = "page", defaultValue = "0") int page,
+                                                  @RequestParam(value = "size", defaultValue = "12") int size){
+        Sort sortOrder = Sort.by(Sort.Direction.ASC, "brand");
+
+        if (sort != null && !sort.isEmpty()) {
+            String[] sortParams = sort.split(",");
+            Sort.Direction direction = Sort.Direction.fromString(sortParams[1]);
+            sortOrder = Sort.by(direction, sortParams[0]);
+        }
+
+        Pageable pageable = PageRequest.of(page, size, sortOrder);
+
         if(categoryName.equalsIgnoreCase("WSZYSTKIE") && brand.equalsIgnoreCase("WSZYSTKIE"))
-            return mapProductToProductRecord(productManager.FindAllProducts());
+            return mapProductToProductRecordPage(productManager.FindAllProducts(pageable));
         else if (categoryName.equalsIgnoreCase("WSZYSTKIE"))
-            return mapProductToProductRecord(productManager.findByBrand(brand));
+            return mapProductToProductRecordPage(productManager.findByBrand(brand, pageable));
         else if (brand.equalsIgnoreCase("WSZYSTKIE"))
-            return mapProductToProductRecord(productManager.findByCategory(categoryName));
+            return mapProductToProductRecordPage(productManager.findByCategory(categoryName, pageable));
         else
-            return mapProductToProductRecord(productManager.findByCategoryAndBrand(categoryName, brand));
+            return mapProductToProductRecordPage(productManager.findByCategoryAndBrand(categoryName, brand, pageable));
     }
 
     private List<ProductDTO> mapProductToProductRecord(List<Product> products) {
@@ -65,6 +67,20 @@ public class ProductApi {
                                 product.getImagePath()))
                 .collect(Collectors.toList());
     }
+
+    private Page<ProductDTO> mapProductToProductRecordPage(Page<Product> products) {
+        List<ProductDTO> productDTOs = products.stream().map(
+                product -> new ProductDTO(
+                        product.getProductId(),
+                        product.getBrand(),
+                        product.getUnitPrice(),
+                        product.getSize(),
+                        product.getImagePath())
+        ).collect(Collectors.toList());
+
+        return new PageImpl<>(productDTOs, products.getPageable(), products.getTotalElements());
+    }
+
     private Optional<ProductDetail> mapProductToProductDetail(Optional<Product> optionalProduct) {
         return optionalProduct.map(
                 product -> new ProductDetail(
