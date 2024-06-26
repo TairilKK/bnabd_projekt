@@ -3,6 +3,9 @@ package com.alibou.security.products;
 import com.alibou.security.categories.Category;
 import com.alibou.security.categories.CategoryRepository;
 import com.alibou.security.user.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,8 +24,8 @@ public class ProductManager {
     public Optional<Product> FindProductById(Long id) {
         return productRepository.findById(id);
     }
-    public List<Product> FindAllProducts() {
-        return productRepository.findAll();
+    public Page<Product> FindAllProducts(Pageable pageable) {
+        return productRepository.findAll(pageable);
     }
 
     public Product save(Product product) {
@@ -33,18 +36,18 @@ public class ProductManager {
         productRepository.delete(product);
     }
 
-    public List<Product> findByCategory(String categoryName) {
+    public Page<Product> findByCategory(String categoryName, Pageable pageable) {
         Optional<Category> category = categoryRepository.findByCategoryName(categoryName);
-        return productRepository.findByCategory(category.get());
+        return productRepository.findByCategory(category.get(), pageable);
     }
 
-    public List<Product> findByBrand(String brand) {
-        return productRepository.findByBrand(brand);
+    public Page<Product> findByBrand(String brand, Pageable pageable) {
+        return productRepository.findByBrand(brand, pageable);
     }
 
-    List<Product> findByCategoryAndBrand(String categoryName, String brand) {
+    Page<Product> findByCategoryAndBrand(String categoryName, String brand, Pageable pageable) {
         Optional<Category> category = categoryRepository.findByCategoryName(categoryName);
-        return productRepository.findByCategoryAndBrand(category.get(), brand);
+        return productRepository.findByCategoryAndBrand(category.get(), brand, pageable);
     }
 
     public List<String> findDistinctBrands() {
