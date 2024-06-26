@@ -47,11 +47,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     jwt = authHeader.substring(7);
     System.out.println("Token JWT: " + jwt);
     userEmail = jwtService.extractUsername(jwt);
+    System.out.println("Użytkownik z tokena: " + userEmail);
     if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
       UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
+      System.out.println("Szczegóły użytkownika załadowane: " + userDetails);
       var isTokenValid = tokenRepository.findByToken(jwt)
               .map(t -> !t.isExpired() && !t.isRevoked())
               .orElse(false);
+      System.out.println("Czy token jest ważny: " + isTokenValid);
       if (jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                 userDetails,
@@ -62,8 +65,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 new WebAuthenticationDetailsSource().buildDetails(request)
         );
         SecurityContextHolder.getContext().setAuthentication(authToken);
+        System.out.println("Użytkownik uwierzytelniony: " + userDetails.getUsername());
+      } else {
+        System.out.println("Token nie jest ważny lub został odwołany/wygaśnięty");
       }
     }
     filterChain.doFilter(request, response);
   }
 }
+
+

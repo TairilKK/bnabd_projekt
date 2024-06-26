@@ -42,15 +42,6 @@ public class SecurityApplication {
 					.build();
 			System.out.println("Client token: " + service.register(manager).getAccessToken());
 
-			var guest = RegisterRequest.builder()
-					.firstname("Guest")
-					.lastname("Guest")
-					.email("guest@mail.com")
-					.password("password")
-					.role(GUEST)
-					.build();
-			System.out.println("Guest token: " + service.register(guest).getAccessToken());
-
 		};
 	}
 }

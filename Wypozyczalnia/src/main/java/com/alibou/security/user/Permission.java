@@ -13,7 +13,6 @@ Permission {
     EMPLOYEE_UPDATE("employee:update"),
     EMPLOYEE_CREATE("employee:create"),
     EMPLOYEE_DELETE("employee:delete"),
-    GUEST_READ("guest:read")
 
     ;
 
