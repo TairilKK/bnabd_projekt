@@ -27,11 +27,6 @@ public enum Role {
                   EMPLOYEE_CREATE,
                   EMPLOYEE_DELETE
           )
-  ),
-  GUEST(
-          Set.of(
-                  GUEST_READ
-          )
   );
 
   @Getter
