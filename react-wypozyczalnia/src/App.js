@@ -9,6 +9,7 @@ import UserList from "./components/userList/UserList";
 import MyOrders from "./myorders/MyOrders";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AddProductForm from "./components/addProduct/AddProductForm";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/order" element={<Order />} />
           <Route path="/employee" element={<UserList />} />
           <Route path="/myorders" element={<MyOrders />} />
+          <Route path="/addproduct" element={<AddProductForm />} />
         </Routes>
         <ToastContainer />
       </div>
