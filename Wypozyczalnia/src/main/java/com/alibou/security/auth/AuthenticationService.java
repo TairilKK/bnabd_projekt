@@ -34,13 +34,21 @@ public class AuthenticationService {
   private final AuthenticationManager authenticationManager;
 
   public AuthenticationResponse register(RegisterRequest request) {
+    if (repository.findByEmail(request.getEmail()).isPresent()) {
+      throw new RuntimeException("Adres e-mail już istnieje");
+    }
+
+    String firstName = capitalizeFirstLetter(request.getFirstname());
+    String lastName = capitalizeFirstLetter(request.getLastname());
+    String phoneNumber = formatPhoneNumber(request.getPhonenumber());
+
     var user = User.builder()
-            .firstName(request.getFirstname())
-            .lastName(request.getLastname())
+            .firstName(firstName)
+            .lastName(lastName)
             .email(request.getEmail())
             .password(passwordEncoder.encode(request.getPassword()))
             .role(request.getRole())
-            .phoneNumber(request.getPhonenumber())
+            .phoneNumber(phoneNumber)
             .build();
     var savedUser = repository.save(user);
     var jwtToken = jwtService.generateToken(user);
@@ -52,6 +60,22 @@ public class AuthenticationService {
             .user(savedUser)
             .build();
   }
+
+  private String capitalizeFirstLetter(String input) {
+    if (input == null || input.isEmpty()) {
+      return input;
+    }
+    return input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();
+  }
+
+  private String formatPhoneNumber(String phoneNumber) {
+    if (phoneNumber == null) {
+      return null;
+    }
+    phoneNumber = phoneNumber.replaceAll("\\s+", "");
+    return phoneNumber.replaceFirst("(\\+\\d{2})(\\d{3})(\\d{3})(\\d{3})", "$1 $2 $3 $4");
+  }
+
 
   public AuthenticationResponse authenticate(AuthenticationRequest request) {
     System.out.println("Authenticating user with email: " + request.getEmail());
