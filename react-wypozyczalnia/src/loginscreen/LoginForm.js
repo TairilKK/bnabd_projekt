@@ -2,6 +2,8 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import apiClient from "../components/apiClient";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
@@ -30,10 +32,12 @@ const LoginForm = () => {
           navigate("/");
         } else {
           console.error("No access token found in response");
+          toast.error("Brak tokenu dostępu w odpowiedzi");
         }
       })
       .catch((error) => {
         console.error("There was an error logging in!", error);
+        toast.error("Błąd logowania. Sprawdź swoje dane i spróbuj ponownie.");
       });
   };
 

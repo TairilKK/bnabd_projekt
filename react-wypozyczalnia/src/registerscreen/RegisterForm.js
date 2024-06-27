@@ -2,6 +2,8 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const RegisterForm = () => {
   const [formData, setFormData] = useState({
@@ -24,7 +26,7 @@ const RegisterForm = () => {
   const validate = () => {
     const errors = {};
     const nameRegex = /^[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$/;
-    const phoneRegex = /^\+48 \d{3} \d{3} \d{3}$/;
+    const phoneRegex = /^\+\d{2} ?\d{3} ?\d{3} ?\d{3}$/;
 
     if (!formData.firstName) {
       errors.firstName = "Imię jest wymagane";
@@ -41,7 +43,8 @@ const RegisterForm = () => {
     if (!formData.phoneNumber) {
       errors.phoneNumber = "Numer telefonu jest wymagany";
     } else if (!phoneRegex.test(formData.phoneNumber)) {
-      errors.phoneNumber = "Numer telefonu musi być w formacie +48 123 456 789";
+      errors.phoneNumber =
+        "Numer telefonu musi być w formacie +48 123 456 789 lub +48123456789";
     }
 
     if (!formData.email) {
@@ -80,10 +83,12 @@ const RegisterForm = () => {
         })
         .then((response) => {
           console.log(response.data);
+          toast.success("Rejestracja zakończona sukcesem!");
           navigate("/login");
         })
         .catch((error) => {
           console.error("There was an error registering!", error);
+          toast.error("Błąd podczas rejestracji. Spróbuj ponownie.");
         });
     }
   };

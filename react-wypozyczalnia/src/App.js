@@ -7,6 +7,8 @@ import ItemDetail from "./itemdetail/ItemDetail";
 import Order from "./order/Order";
 import UserList from "./components/userList/UserList";
 import MyOrders from "./myorders/MyOrders";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -21,6 +23,7 @@ function App() {
           <Route path="/employee" element={<UserList />} />
           <Route path="/myorders" element={<MyOrders />} />
         </Routes>
+        <ToastContainer />
       </div>
     </Router>
   );
