@@ -8,6 +8,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -31,7 +32,23 @@ public class Product {
     private Category category;
 
     @OneToMany(mappedBy = "product")
+    @JsonIgnore
     private List<Rent> rents;
 
     private String imagePath;
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "productId=" + productId +
+                ", brand='" + brand + '\'' +
+                ", model='" + model + '\'' +
+                ", size='" + size + '\'' +
+                ", type='" + type + '\'' +
+                ", unitPrice=" + unitPrice +
+                ", availability=" + availability +
+                ", conditionState='" + conditionState + '\'' +
+                ", imagePath='" + imagePath + '\'' +
+                '}';
+    }
 }

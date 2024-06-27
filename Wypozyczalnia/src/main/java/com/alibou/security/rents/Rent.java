@@ -2,6 +2,8 @@ package com.alibou.security.rents;
 
 import com.alibou.security.products.Product;
 import com.alibou.security.user.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,6 +33,7 @@ public class Rent {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "productId", referencedColumnName = "productId")
+    @JsonIgnore
     private Product product;
 
     private Date rentStart;

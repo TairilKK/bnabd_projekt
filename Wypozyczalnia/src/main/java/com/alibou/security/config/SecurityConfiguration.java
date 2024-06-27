@@ -25,6 +25,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@RequiredArgsConstructor
 public class SecurityConfiguration {
 
     private static final String[] WHITE_LIST_URL = {
@@ -40,45 +41,39 @@ public class SecurityConfiguration {
             "/configuration/security",
             "/swagger-ui/**",
             "/webjars/**",
-            "/swagger-ui.html"};
+            "/swagger-ui.html"
+    };
+
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
     private final LogoutHandler logoutHandler;
-
-    public SecurityConfiguration(JwtAuthenticationFilter jwtAuthFilter,
-                                 AuthenticationProvider authenticationProvider,
-                                 LogoutHandler logoutHandler) {
-        this.jwtAuthFilter = jwtAuthFilter;
-        this.authenticationProvider = authenticationProvider;
-        this.logoutHandler = logoutHandler;
-    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(req ->
-                        req.requestMatchers(WHITE_LIST_URL).permitAll()
-                                .requestMatchers("/api/v1/employee/**").hasRole(Role.EMPLOYEE.name())
-                                .requestMatchers(GET, "/api/v1/employee/**").hasAuthority(Permission.EMPLOYEE_READ.name())
-                                .requestMatchers(POST, "/api/v1/employee/**").hasAuthority(Permission.EMPLOYEE_CREATE.name())
-                                .requestMatchers(PUT, "/api/v1/employee/**").hasAuthority(Permission.EMPLOYEE_UPDATE.name())
-                                .requestMatchers(DELETE, "/api/v1/employee/**").hasAuthority(Permission.EMPLOYEE_DELETE.name())
-                                .requestMatchers(GET, "/api/v1/client/**").hasAuthority(Permission.CLIENT_READ.name())
-                                .requestMatchers(PUT, "/api/v1/client/**").hasAuthority(Permission.CLIENT_UPDATE.name())
-                                .requestMatchers(GET, "/api/v1/users/all").hasRole("EMPLOYEE")
-                                .requestMatchers(PUT, "/api/v1/users/role/**").hasRole("EMPLOYEE")
-                                .requestMatchers(GET, "/").permitAll()
-                                .anyRequest().authenticated()
+                .authorizeHttpRequests(req -> req
+                        .requestMatchers(WHITE_LIST_URL).permitAll()
+                        .requestMatchers("/api/v1/employee/**").hasRole(Role.EMPLOYEE.name())
+                        .requestMatchers(GET, "/api/v1/employee/**").hasAuthority(Permission.EMPLOYEE_READ.name())
+                        .requestMatchers(POST, "/api/v1/employee/**").hasAuthority(Permission.EMPLOYEE_CREATE.name())
+                        .requestMatchers(PUT, "/api/v1/employee/**").hasAuthority(Permission.EMPLOYEE_UPDATE.name())
+                        .requestMatchers(DELETE, "/api/v1/employee/**").hasAuthority(Permission.EMPLOYEE_DELETE.name())
+                        .requestMatchers(GET, "/api/v1/client/**").hasAuthority(Permission.CLIENT_READ.name())
+                        .requestMatchers(PUT, "/api/v1/client/**").hasAuthority(Permission.CLIENT_UPDATE.name())
+                        .requestMatchers(GET, "/api/v1/users/all").hasRole("EMPLOYEE")
+                        .requestMatchers(PUT, "/api/v1/users/role/**").hasRole("EMPLOYEE")
+                        .requestMatchers(GET, "/").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .cors(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                .logout(logout ->
-                        logout.logoutUrl("/api/v1/auth/logout")
-                                .addLogoutHandler(logoutHandler)
-                                .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
+                .logout(logout -> logout
+                        .logoutUrl("/api/v1/auth/logout")
+                        .addLogoutHandler(logoutHandler)
+                        .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
                 );
 
         return http.build();

@@ -53,4 +53,23 @@ public class ProductManager {
     public List<String> findDistinctBrands() {
         return productRepository.findDistinctBrands();
     }
+
+    /*public Product saveProduct(Product product) {
+        return productRepository.save(product);
+    }*/
+
+    public Product saveProduct(Product product) {
+        System.out.println("Saving product: " + product);
+        try {
+            return productRepository.save(product);
+        } catch (Exception e) {
+            System.err.println("Error in saveProduct: " + e.getMessage());
+            throw new RuntimeException("Error in saveProduct", e);
+        }
+    }
+
+    public List<String> findDistinctCategories() {
+        return productRepository.findDistinctCategories();
+    }
+
 }
