@@ -27,7 +27,6 @@ public class ProductApi {
 
     @PostMapping("/add")
     public Product addProduct(@RequestBody Product newProduct) {
-        // Znajdź kategorię na podstawie nazwy kategorii
         Optional<Category> categoryOptional = categoryRepository.findByCategoryName(newProduct.getCategory().getCategoryName());
         if (categoryOptional.isPresent()) {
             newProduct.setCategory(categoryOptional.get());

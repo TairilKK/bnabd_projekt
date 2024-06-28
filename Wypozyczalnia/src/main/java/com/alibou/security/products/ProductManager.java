@@ -54,10 +54,6 @@ public class ProductManager {
         return productRepository.findDistinctBrands();
     }
 
-    /*public Product saveProduct(Product product) {
-        return productRepository.save(product);
-    }*/
-
     public Product saveProduct(Product product) {
         System.out.println("Saving product: " + product);
         try {
