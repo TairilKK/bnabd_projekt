@@ -14,7 +14,6 @@ const MyOrders = () => {
   const [id, setId] = useState(1);
 
   useEffect(() => {
-    // Fetch data from the API using Axios
     axios
       .get(`http://localhost:8090/api/v1/rents/client?id=${id}`)
       .then((response) => {

@@ -26,7 +26,7 @@ const AddProductForm = () => {
   });
 
   const [categories, setCategories] = useState([]);
-  const navigate = useNavigate(); // Użyj hooka useNavigate do przekierowania
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -47,7 +47,6 @@ const AddProductForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Przygotowanie danych do wysłania
     const formDataToSend = {
       ...formData,
       category: {
@@ -71,7 +70,7 @@ const AddProductForm = () => {
           category: "",
           imagePath: "",
         });
-        navigate("/"); // Przekierowanie na stronę główną po pomyślnym dodaniu produktu
+        navigate("/");
       })
       .catch((error) => {
         console.error("Błąd przy dodawaniu produktu!", error);

@@ -24,7 +24,7 @@ const LoginForm = () => {
         console.log("Logged in:", response.data);
         if (response.data.access_token) {
           localStorage.setItem("token", response.data.access_token);
-          localStorage.setItem("role", response.data.user.role); // Zapisz rolę użytkownika
+          localStorage.setItem("role", response.data.user.role);
           console.log(
             "Token zapisany w localStorage:",
             localStorage.getItem("token")

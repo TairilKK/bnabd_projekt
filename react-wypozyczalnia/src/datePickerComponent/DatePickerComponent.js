@@ -18,7 +18,7 @@ const DatePickerComponent = () => {
       onChange={(update) => {
         setDateRange(update);
         if (update[0] && update[1]) {
-          setTimeout(() => setDateRange([null, null]), 2000); // Reset dat po 2 sekundach
+          setTimeout(() => setDateRange([null, null]), 2000);
         }
       }}
       dateFormat="eee, d MMM"

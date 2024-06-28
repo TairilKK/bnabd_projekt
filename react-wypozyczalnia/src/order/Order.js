@@ -7,7 +7,6 @@ const Order = () => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    // Fetch data from the API using Axios
     axios
       .get("http://localhost:8090/api/v1/rents/all")
       .then((response) => {
