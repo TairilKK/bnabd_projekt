@@ -10,6 +10,7 @@ import {
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const AddProductForm = () => {
   const [formData, setFormData] = useState({
@@ -25,6 +26,7 @@ const AddProductForm = () => {
   });
 
   const [categories, setCategories] = useState([]);
+  const navigate = useNavigate(); // Użyj hooka useNavigate do przekierowania
 
   useEffect(() => {
     axios
@@ -69,6 +71,7 @@ const AddProductForm = () => {
           category: "",
           imagePath: "",
         });
+        navigate("/"); // Przekierowanie na stronę główną po pomyślnym dodaniu produktu
       })
       .catch((error) => {
         console.error("Błąd przy dodawaniu produktu!", error);

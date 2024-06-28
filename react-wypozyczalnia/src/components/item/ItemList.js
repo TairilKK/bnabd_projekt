@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Button, ButtonGroup } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import Item from "./Item";
 import Filter from "../filter/Filter";
-import axios from "axios";
+import axios from "../apiClient";
 
 const ItemList = () => {
   const [items, setItems] = useState([]);
@@ -11,25 +12,25 @@ const ItemList = () => {
   const [sort, setSort] = useState("brand,asc");
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
+  const [role, setRole] = useState(null);
 
   useEffect(() => {
+    const userRole = localStorage.getItem("role");
+    setRole(userRole);
     fetchItems(category, brand, sort, page);
   }, [category, brand, sort, page]);
 
   const fetchItems = async (category, brand, sort, page) => {
     try {
-      const response = await axios.get(
-        `http://localhost:8090/api/v1/products/filter`,
-        {
-          params: {
-            categoryName: category,
-            brandName: brand,
-            sort: sort,
-            page: page,
-            size: 12,
-          },
-        }
-      );
+      const response = await axios.get(`/products/filter`, {
+        params: {
+          categoryName: category,
+          brandName: brand,
+          sort: sort,
+          page: page,
+          size: 12,
+        },
+      });
       setItems(response.data.content);
       setTotalPages(response.data.totalPages);
     } catch (error) {
@@ -144,6 +145,15 @@ const ItemList = () => {
           </ButtonGroup>
         </Col>
       </Row>
+      {role === "EMPLOYEE" && (
+        <Row className="mt-4">
+          <Col className="d-flex justify-content-center">
+            <Link to="/addproduct" className="btn btn-primary">
+              Dodaj Produkt
+            </Link>
+          </Col>
+        </Row>
+      )}
     </Container>
   );
 };

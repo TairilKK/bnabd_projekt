@@ -76,7 +76,7 @@ const Navbar = () => {
           )}
           {role === "EMPLOYEE" && (
             <>
-              <Link to="/addproduct" className="m-3">
+              <Link to="/order" className="m-3">
                 <FaClipboardList size={24} className="text-dark" />
               </Link>
               <Link to="/employee" className="m-3">
