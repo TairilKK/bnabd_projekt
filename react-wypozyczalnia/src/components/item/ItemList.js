@@ -95,66 +95,81 @@ const ItemList = () => {
   };
 
   return (
-    <Container
-      className="full-height-container p-5"
+    <div
       style={{
-        background: "#f0f0f0",
-        height: "100%",
+        backgroundImage: `url("background_2xres.jpg"), linear-gradient(to bottom, #fff, #f0f0f0, #fff)`,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "contain",
+        backgroundColor: "#dbf2ff",
+        paddingTop: "25px",
+        paddingBottom: "25px",
       }}
     >
-      <Filter
-        category={category}
-        setCategory={handleCategoryChange}
-        brand={brand}
-        setBrand={handleBrandChange}
-        sort={sort}
-        setSort={handleSortChange}
-      />
-      <Row>
-        {items.map((item) => (
-          <Col key={item.id} lg={3} md={4} sm={6} xs={12} className="mt-4">
-            <Item
-              id={item.id}
-              title={item.brand}
-              text={item.unitPrice}
-              size={item.size}
-              imgSrc={item.imagePath}
-            />
-          </Col>
-        ))}
-      </Row>
-      <Row className="mt-4">
-        <Col className="d-flex justify-content-center">
-          <ButtonGroup>
-            <Button onClick={() => handlePageChange(0)} disabled={page === 0}>
-              {"<<"}
-            </Button>
-            <Button onClick={handlePrevPage} disabled={page === 0}>
-              {"<"}
-            </Button>
-            {renderPageButtons()}
-            <Button onClick={handleNextPage} disabled={page === totalPages - 1}>
-              {">"}
-            </Button>
-            <Button
-              onClick={() => handlePageChange(totalPages - 1)}
-              disabled={page === totalPages - 1}
-            >
-              {">>"}
-            </Button>
-          </ButtonGroup>
-        </Col>
-      </Row>
-      {role === "EMPLOYEE" && (
+      <Container
+        className="full-height-container p-5"
+        style={{
+          background: "rgba(240, 240, 240, 0.9)",
+          height: "100%",
+          borderRadius: "30px",
+        }}
+      >
+        <Filter
+          category={category}
+          setCategory={handleCategoryChange}
+          brand={brand}
+          setBrand={handleBrandChange}
+          sort={sort}
+          setSort={handleSortChange}
+        />
+        <Row>
+          {items.map((item) => (
+            <Col key={item.id} lg={3} md={4} sm={6} xs={12} className="mt-4">
+              <Item
+                id={item.id}
+                title={item.brand}
+                text={item.unitPrice}
+                size={item.size}
+                imgSrc={item.imagePath}
+              />
+            </Col>
+          ))}
+        </Row>
         <Row className="mt-4">
           <Col className="d-flex justify-content-center">
-            <Link to="/addproduct" className="btn btn-primary">
-              Dodaj Produkt
-            </Link>
+            <ButtonGroup>
+              <Button onClick={() => handlePageChange(0)} disabled={page === 0}>
+                {"<<"}
+              </Button>
+              <Button onClick={handlePrevPage} disabled={page === 0}>
+                {"<"}
+              </Button>
+              {renderPageButtons()}
+              <Button
+                onClick={handleNextPage}
+                disabled={page === totalPages - 1}
+              >
+                {">"}
+              </Button>
+              <Button
+                onClick={() => handlePageChange(totalPages - 1)}
+                disabled={page === totalPages - 1}
+              >
+                {">>"}
+              </Button>
+            </ButtonGroup>
           </Col>
         </Row>
-      )}
-    </Container>
+        {role === "EMPLOYEE" && (
+          <Row className="mt-4">
+            <Col className="d-flex justify-content-center">
+              <Link to="/addproduct" className="btn btn-primary">
+                Dodaj Produkt
+              </Link>
+            </Col>
+          </Row>
+        )}
+      </Container>
+    </div>
   );
 };
 

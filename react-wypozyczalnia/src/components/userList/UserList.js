@@ -3,6 +3,7 @@ import { Container, ListGroup, Row, Form } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import apiClient from "../apiClient";
 import UserCard from "./UserCard";
+import Footer from "../footer/Footer";
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
@@ -10,7 +11,7 @@ const UserList = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    const decodedToken = parseJwt(token); // Function to decode JWT
+    const decodedToken = parseJwt(token);
     setCurrentUserEmail(decodedToken.sub);
 
     apiClient
@@ -52,69 +53,98 @@ const UserList = () => {
 
   return (
     <div
-      style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "100vh",
+      }}
     >
       <Navbar />
-      <Container
-        className="py-5 px-4"
-        style={{ backgroundColor: "#f0f0f0", flexGrow: 1 }}
+      <div
+        className="flex-grow-1 p-5"
+        style={{
+          backgroundImage: `url("background_2xres.jpg")`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover", // ensure the image covers the whole container
+          backgroundColor: "#dbf2ff",
+          paddingTop: "25px",
+          paddingBottom: "25px",
+        }}
       >
-        <ListGroup horizontal className="mb-2 d-none d-lg-flex">
-          <ListGroup.Item style={{ ...flexStyle, flex: 3, fontWeight: "bold" }}>
-            Imię
-          </ListGroup.Item>
-          <ListGroup.Item style={{ ...flexStyle, flex: 3, fontWeight: "bold" }}>
-            Nazwisko
-          </ListGroup.Item>
-          <ListGroup.Item style={{ ...flexStyle, flex: 3, fontWeight: "bold" }}>
-            Email
-          </ListGroup.Item>
-          <ListGroup.Item style={{ ...flexStyle, flex: 1, fontWeight: "bold" }}>
-            Pracownik
-          </ListGroup.Item>
-        </ListGroup>
-        <Row className="d-lg-none">
-          {users.map((usr) => (
-            <UserCard
-              key={usr.email}
-              firstName={usr.firstName}
-              lastName={usr.lastName}
-              email={usr.email}
-              role={usr.role}
-              userId={usr.id}
-              isEmployee={usr.role === "EMPLOYEE"}
-              onSwitchChange={handleRoleChange}
-              currentUserEmail={currentUserEmail} // Pass current user's email
-            />
-          ))}
-        </Row>
-        {users.map((usr) => (
-          <ListGroup
-            horizontal
-            className="mb-1 d-none d-lg-flex"
-            key={usr.email}
-          >
-            <ListGroup.Item style={{ ...flexStyle, flex: 3 }}>
-              {usr.firstName}
+        <Container
+          className="p-5"
+          style={{
+            backgroundColor: "rgba(240, 240, 240, 0.9)",
+            flexGrow: 1,
+            borderRadius: "30px",
+          }}
+        >
+          <ListGroup horizontal className="mb-2 d-none d-lg-flex">
+            <ListGroup.Item
+              style={{ ...flexStyle, flex: 3, fontWeight: "bold" }}
+            >
+              Imię
             </ListGroup.Item>
-            <ListGroup.Item style={{ ...flexStyle, flex: 3 }}>
-              {usr.lastName}
+            <ListGroup.Item
+              style={{ ...flexStyle, flex: 3, fontWeight: "bold" }}
+            >
+              Nazwisko
             </ListGroup.Item>
-            <ListGroup.Item style={{ ...flexStyle, flex: 3 }}>
-              {usr.email}
+            <ListGroup.Item
+              style={{ ...flexStyle, flex: 3, fontWeight: "bold" }}
+            >
+              Email
             </ListGroup.Item>
-            <ListGroup.Item style={{ ...flexStyle, flex: 1 }}>
-              <Form.Check
-                type="switch"
-                id={`switch-${usr.email}`}
-                checked={usr.role === "EMPLOYEE"}
-                onChange={() => handleRoleChange(usr.id, usr.role)}
-                disabled={usr.email === currentUserEmail} // Disable switch if it's the current user's email
-              />
+            <ListGroup.Item
+              style={{ ...flexStyle, flex: 1, fontWeight: "bold" }}
+            >
+              Pracownik
             </ListGroup.Item>
           </ListGroup>
-        ))}
-      </Container>
+          <Row className="d-lg-none">
+            {users.map((usr) => (
+              <UserCard
+                key={usr.email}
+                firstName={usr.firstName}
+                lastName={usr.lastName}
+                email={usr.email}
+                role={usr.role}
+                userId={usr.id}
+                isEmployee={usr.role === "EMPLOYEE"}
+                onSwitchChange={handleRoleChange}
+                currentUserEmail={currentUserEmail} // Pass current user's email
+              />
+            ))}
+          </Row>
+          {users.map((usr) => (
+            <ListGroup
+              horizontal
+              className="mb-1 d-none d-lg-flex"
+              key={usr.email}
+            >
+              <ListGroup.Item style={{ ...flexStyle, flex: 3 }}>
+                {usr.firstName}
+              </ListGroup.Item>
+              <ListGroup.Item style={{ ...flexStyle, flex: 3 }}>
+                {usr.lastName}
+              </ListGroup.Item>
+              <ListGroup.Item style={{ ...flexStyle, flex: 3 }}>
+                {usr.email}
+              </ListGroup.Item>
+              <ListGroup.Item style={{ ...flexStyle, flex: 1 }}>
+                <Form.Check
+                  type="switch"
+                  id={`switch-${usr.email}`}
+                  checked={usr.role === "EMPLOYEE"}
+                  onChange={() => handleRoleChange(usr.id, usr.role)}
+                  disabled={usr.email === currentUserEmail} // Disable switch if it's the current user's email
+                />
+              </ListGroup.Item>
+            </ListGroup>
+          ))}
+        </Container>
+      </div>
+      <Footer />
     </div>
   );
 };

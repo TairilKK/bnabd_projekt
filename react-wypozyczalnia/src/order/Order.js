@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Container, ListGroup } from "react-bootstrap";
 import Navbar from "../components/navbar/Navbar";
 import axios from "axios";
+import Footer from "../components/footer/Footer";
 
 const Order = () => {
   const [items, setItems] = useState([]);
@@ -19,42 +20,58 @@ const Order = () => {
 
   return (
     <div
-      className="justify-content-center align-items-center min-vh-100"
       style={{
-        background: "linear-gradient(-15deg, #4a87a2, #86cce9)",
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "100vh",
       }}
     >
       <Navbar />
-      <Container
-        className="py-5 px-4 justify-content-center align-items-center min-vh-100"
+      <div
+        className="flex-grow-1 p-5"
         style={{
-          backgroundColor: "#f0f0f0",
+          backgroundImage: `url("background_2xres.jpg")`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover", // ensure the image covers the whole container
+          backgroundColor: "#dbf2ff",
+          paddingTop: "25px",
+          paddingBottom: "25px",
         }}
       >
-        <ListGroup variant="flush">
-          {items.map((item) => (
-            <ListGroup.Item
-              key={item.rentId}
-              className="d-flex justify-content-between align-items-center mb-1"
-            >
-              <div className="d-flex align-items-center w-100">
-                <div className="mr-3 me-1">{item.rentId}.</div>{" "}
-                <div className="mr-3 me-4">{item.brand}</div>{" "}
-                <div className="mr-3 me-4">
-                  {" "}
-                  {new Date(item.start).toLocaleDateString()}
-                </div>{" "}
-                <div className="mr-3 me-1">
-                  {new Date(item.end).toLocaleDateString()}
+        <Container
+          className="p-5"
+          style={{
+            backgroundColor: "rgba(240, 240, 240, 0.9)",
+            flexGrow: 1,
+            borderRadius: "30px",
+          }}
+        >
+          <ListGroup variant="flush">
+            {items.map((item) => (
+              <ListGroup.Item
+                key={item.rentId}
+                className="d-flex justify-content-between align-items-center mb-1"
+              >
+                <div className="d-flex align-items-center w-100">
+                  <div className="mr-3 me-1">{item.rentId}.</div>{" "}
+                  <div className="mr-3 me-4">{item.brand}</div>{" "}
+                  <div className="mr-3 me-4">
+                    {" "}
+                    {new Date(item.start).toLocaleDateString()}
+                  </div>{" "}
+                  <div className="mr-3 me-1">
+                    {new Date(item.end).toLocaleDateString()}
+                  </div>
                 </div>
-              </div>
-              <Button variant="warning" className="ml-auto">
-                Pzyjmij
-              </Button>
-            </ListGroup.Item>
-          ))}
-        </ListGroup>
-      </Container>
+                <Button variant="warning" className="ml-auto">
+                  Pzyjmij
+                </Button>
+              </ListGroup.Item>
+            ))}
+          </ListGroup>
+        </Container>
+      </div>
+      <Footer />
     </div>
   );
 };
