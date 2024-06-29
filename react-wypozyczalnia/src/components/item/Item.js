@@ -22,6 +22,7 @@ const Item = ({ id, title, text, size, imgSrc }) => {
           style={{
             height: "286px",
             background: "#e0e0e0",
+            borderRadius: "10px 10px 0 0",
           }}
         >
           <Image

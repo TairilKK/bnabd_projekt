@@ -25,6 +25,7 @@ const LoginForm = () => {
         if (response.data.access_token) {
           localStorage.setItem("token", response.data.access_token);
           localStorage.setItem("role", response.data.user.role);
+          toast.success("Zalogowano pomyślnie.", { position: "bottom-right" });
           console.log(
             "Token zapisany w localStorage:",
             localStorage.getItem("token")
@@ -32,7 +33,7 @@ const LoginForm = () => {
           navigate("/");
         } else {
           console.error("No access token found in response");
-          toast.error("Brak tokenu dostępu w odpowiedzi");
+          toast.error("Brak tokenu dostępu w odpowiedzi.");
         }
       })
       .catch((error) => {

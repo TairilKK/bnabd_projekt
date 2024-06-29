@@ -8,6 +8,7 @@ import {
   FaUsers,
 } from "react-icons/fa";
 import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -33,6 +34,7 @@ const Navbar = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
     setIsAuthenticated(false);
+    toast.success("Wylogowano pomyślnie", { position: "bottom-right" });
     setRole(null);
     navigate("/");
   };
