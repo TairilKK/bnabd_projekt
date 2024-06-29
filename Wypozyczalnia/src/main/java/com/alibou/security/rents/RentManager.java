@@ -4,6 +4,7 @@ import com.alibou.security.user.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RentManager {
@@ -13,15 +14,25 @@ public class RentManager {
         this.rentRepository = rentRepository;
     }
 
-    public List<Rent> FindAll(){
-        return rentRepository.findAll();
+    public List<RentDTO> FindAll(){
+        return mapToRentDTOList(rentRepository.findAll());
     }
 
-    public List<Rent> FindByEmployee(User employee){
-        return rentRepository.findByEmployee(employee);
+    public Rent FindById(Long id){
+        return rentRepository.findById(id).get();
     }
 
-    public List<Rent> FindByClient(User client){
-        return rentRepository.findByClient(client);
+    public List<RentDTO> FindByEmployee(User employee){
+        return mapToRentDTOList(rentRepository.findByEmployee(employee));
+    }
+
+    public List<RentDTO> FindByClient(User client){
+        return mapToRentDTOList(rentRepository.findByClient(client));
+    }
+
+    public List<RentDTO> mapToRentDTOList(List<Rent> rents) {
+        return rents.stream()
+                .map(RentDTO::new)
+                .collect(Collectors.toList());
     }
 }

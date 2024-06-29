@@ -1,6 +1,7 @@
 package com.alibou.security.products;
 
 import com.alibou.security.categories.Category;
+import com.alibou.security.rentdetails.RentDetail;
 import com.alibou.security.rents.Rent;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -33,7 +34,7 @@ public class Product {
 
     @OneToMany(mappedBy = "product")
     @JsonIgnore
-    private List<Rent> rents;
+    private List<RentDetail> rentDetails;
 
     private String imagePath;
 

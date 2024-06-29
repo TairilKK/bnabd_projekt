@@ -1,7 +1,7 @@
 package com.alibou.security.rents;
 
-import com.alibou.security.products.Product;
 import com.alibou.security.user.User;
+import com.alibou.security.rentdetails.RentDetail;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Builder
@@ -18,25 +19,24 @@ import java.util.Date;
 @AllArgsConstructor
 @Entity
 public class Rent {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long rentId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "employeeId", referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @JoinColumn(name = "employee_id", referencedColumnName = "id")
+    @JsonBackReference
     private User employee;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "clientId", referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id", referencedColumnName = "id")
+    @JsonBackReference
     private User client;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "productId", referencedColumnName = "productId")
-    @JsonIgnore
-    private Product product;
 
     private Date rentStart;
     private Date rentEnd;
 
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "rent")
+    @JsonIgnore
+    private List<RentDetail> rentDetails;
 }

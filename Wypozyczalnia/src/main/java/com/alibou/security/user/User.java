@@ -2,13 +2,8 @@ package com.alibou.security.user;
 
 import com.alibou.security.rents.Rent;
 import com.alibou.security.token.Token;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import java.util.Collection;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -39,11 +34,11 @@ public class User implements UserDetails {
   @Enumerated(EnumType.STRING)
   private Role role;
 
-  @OneToMany(mappedBy = "employee")
+  @OneToMany(cascade = CascadeType.MERGE, mappedBy = "employee")
   @JsonManagedReference
   private List<Rent> rentsEmployee;
 
-  @OneToMany(mappedBy = "client")
+  @OneToMany(cascade = CascadeType.MERGE, mappedBy = "client")
   @JsonManagedReference
   private List<Rent> rentsClient;
 

@@ -11,4 +11,6 @@ BnaBD:
 	
 	
 Dzisiaj:
-	Dodać order by cena
+	- dodać image background
+	- poprawy wygladu
+	- popróbować encje te zamowienia zeby bylo zamowienie detail

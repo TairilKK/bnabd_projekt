@@ -4,6 +4,12 @@ import com.alibou.security.categories.Category;
 import com.alibou.security.categories.CategoryRepository;
 import com.alibou.security.products.Product;
 import com.alibou.security.products.ProductRepository;
+import com.alibou.security.rentdetails.RentDetail;
+import com.alibou.security.rentdetails.RentDetailRepository;
+import com.alibou.security.rents.Rent;
+import com.alibou.security.rents.RentRepository;
+import com.alibou.security.user.User;
+import com.alibou.security.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.boot.CommandLineRunner;
@@ -12,6 +18,9 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
+import static com.alibou.security.user.Role.CLIENT;
+import static com.alibou.security.user.Role.EMPLOYEE;
 
 @Component
 public class DataLoader implements CommandLineRunner {
@@ -22,8 +31,16 @@ public class DataLoader implements CommandLineRunner {
     @Autowired
     private ProductRepository productRepository;
 
-    @Override
-    public void run(String... args) throws Exception {
+    @Autowired
+    private RentRepository rentRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private RentDetailRepository rentDetailRepository;
+
+    private void InsertProducts(){
         List<String> cName = Arrays.asList(
                 "NARTY", "KASKI", "KIJKI", "GOGLE",
                 "SNOWBOARD", "BUTY NARCIARSKIE", "BUTY SNOWBOARDOWE");
@@ -671,6 +688,54 @@ public class DataLoader implements CommandLineRunner {
             p.setUnitPrice(BigDecimal.valueOf(90));
 
             productRepository.save(p);
+        }
+    }
+
+    private void InsertRents() {
+        try {
+            User client = new User();
+            client.setFirstName("Test");
+            client.setLastName("Client");
+            client.setEmail("testclient@mail.com");
+            client.setPassword("12345");
+            client.setRole(CLIENT);
+
+            client = userRepository.save(client);  // Upewnij się, że client jest zarządzany
+
+            User employee = new User();
+            employee.setFirstName("Test");
+            employee.setLastName("Employee");
+            employee.setEmail("testemp@mail.com");
+            employee.setPassword("12345");
+            employee.setRole(EMPLOYEE);
+
+            employee = userRepository.save(employee);  // Upewnij się, że employee jest zarządzany
+
+            Rent r = new Rent();
+            r.setClient(client);
+            r.setEmployee(employee);
+            r = rentRepository.save(r);
+
+            RentDetail rd = new RentDetail();
+            rd.setRent(r);
+            rd.setQuantity(2L);
+            rentDetailRepository.save(rd);
+
+        } catch (Exception e) {
+            System.out.println("Error inserting rents: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void run(String... args) throws Exception {
+        try {
+            InsertProducts();
+            InsertRents();
+        } catch (Exception e) {
+            System.out.println("Error executing CommandLineRunner: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }
