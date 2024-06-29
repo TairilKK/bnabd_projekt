@@ -12,7 +12,11 @@ const Item = ({ id, title, text, size, imgSrc }) => {
         borderRadius: "10px",
       }}
     >
-      <Link to={`/product/${id}`} className="d-flex flex-column h-100">
+      <Link
+        to={`/product/${id}`}
+        className="d-flex flex-column h-100"
+        style={{ textDecoration: "none", color: "inherit" }}
+      >
         <div
           className="image-container p-2"
           style={{
@@ -32,7 +36,12 @@ const Item = ({ id, title, text, size, imgSrc }) => {
             }}
           />
         </div>
-        <div className="card-body mt-auto">
+        <div
+          className="card-body mt-auto"
+          style={{
+            minHeight: "120px",
+          }}
+        >
           <h5 className="card-title">{title}</h5>
           <p className="card-text">
             Cena: {text}
