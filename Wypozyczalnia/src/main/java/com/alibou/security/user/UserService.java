@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -39,6 +40,7 @@ public class UserService {
     public List<UserDTO> getAllUsers() {
         List<User> users = repository.findAll();
         return users.stream()
+                .sorted(Comparator.comparing(User::getRole).reversed())
                 .map(user -> new UserDTO(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getRole().name()))
                 .collect(Collectors.toList());
     }
