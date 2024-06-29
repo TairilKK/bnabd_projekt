@@ -5,12 +5,19 @@ import "./styles.css";
 
 const Item = ({ id, title, text, size, imgSrc }) => {
   return (
-    <div className="card h-100 d-flex flex-column">
+    <div
+      className="card h-100 d-flex flex-column"
+      style={{
+        borderColor: "#73b9cb",
+        borderRadius: "10px",
+      }}
+    >
       <Link to={`/product/${id}`} className="d-flex flex-column h-100">
         <div
-          className="image-container"
+          className="image-container p-2"
           style={{
             height: "286px",
+            background: "#e0e0e0",
           }}
         >
           <Image

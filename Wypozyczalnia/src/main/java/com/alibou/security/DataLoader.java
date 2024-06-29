@@ -56,7 +56,7 @@ public class DataLoader implements CommandLineRunner {
             Category category = optionalCategory.get();
 
             Product p = new Product();
-            p.setImagePath("img_products/fischer_narty.jpg");
+            p.setImagePath("img_products/fischer_narty.png");
             p.setAvailability(44);
             p.setBrand("Fischer");
             p.setCategory(category);
@@ -69,7 +69,7 @@ public class DataLoader implements CommandLineRunner {
             productRepository.save(p);
 
             p = new Product();
-            p.setImagePath("img_products/fischer_narty.jpg");
+            p.setImagePath("img_products/fischer_narty.png");
             p.setAvailability(24);
             p.setBrand("Fischer");
             p.setCategory(category);
@@ -82,7 +82,7 @@ public class DataLoader implements CommandLineRunner {
             productRepository.save(p);
 
             p = new Product();
-            p.setImagePath("img_products/fischer_narty.jpg");
+            p.setImagePath("img_products/fischer_narty.png");
             p.setAvailability(34);
             p.setBrand("Fischer");
             p.setCategory(category);
@@ -95,7 +95,7 @@ public class DataLoader implements CommandLineRunner {
             productRepository.save(p);
 
             p = new Product();
-            p.setImagePath("img_products/narty-rossignol-px01-forza-50-v-cam-m.jpg");
+            p.setImagePath("img_products/narty-rossignol-px01-forza-50-v-cam-m.png");
             p.setAvailability(23);
             p.setBrand("Rossignol");
             p.setCategory(category);
@@ -108,7 +108,7 @@ public class DataLoader implements CommandLineRunner {
             productRepository.save(p);
 
             p = new Product();
-            p.setImagePath("img_products/narty-rossignol-px01-forza-50-v-cam-m.jpg");
+            p.setImagePath("img_products/narty-rossignol-px01-forza-50-v-cam-m.png");
             p.setAvailability(32);
             p.setBrand("Rossignol");
             p.setCategory(category);
@@ -121,7 +121,7 @@ public class DataLoader implements CommandLineRunner {
             productRepository.save(p);
 
             p = new Product();
-            p.setImagePath("img_products/narty-rossignol-px01-forza-50-v-cam-m.jpg");
+            p.setImagePath("img_products/narty-rossignol-px01-forza-50-v-cam-m.png");
             p.setAvailability(14);
             p.setBrand("Rossignol");
             p.setCategory(category);
@@ -153,7 +153,7 @@ public class DataLoader implements CommandLineRunner {
             Category category = optionalCategory.get();
 
             Product p = new Product();
-            p.setImagePath("img_products/buty-narciarskie-fischer-4822-ranger-one-100-vac-gw-m.jpg");
+            p.setImagePath("img_products/buty-narciarskie-fischer-4822-ranger-one-100-vac-gw-m.png");
             p.setAvailability(12);
             p.setBrand("Fischer");
             p.setCategory(category);
@@ -166,7 +166,7 @@ public class DataLoader implements CommandLineRunner {
             productRepository.save(p);
 
             p = new Product();
-            p.setImagePath("img_products/buty-narciarskie-fischer-4822-ranger-one-100-vac-gw-m.jpg");
+            p.setImagePath("img_products/buty-narciarskie-fischer-4822-ranger-one-100-vac-gw-m.png");
             p.setAvailability(22);
             p.setBrand("Fischer");
             p.setCategory(category);
@@ -179,7 +179,7 @@ public class DataLoader implements CommandLineRunner {
             productRepository.save(p);
 
             p = new Product();
-            p.setImagePath("img_products/buty-narciarskie-fischer-4822-ranger-one-100-vac-gw-m.jpg");
+            p.setImagePath("img_products/buty-narciarskie-fischer-4822-ranger-one-100-vac-gw-m.png");
             p.setAvailability(12);
             p.setBrand("Fischer");
             p.setCategory(category);
@@ -276,7 +276,7 @@ public class DataLoader implements CommandLineRunner {
             Category category = optionalCategory.get();
 
             Product p = new Product();
-            p.setImagePath("img_products/kask-zimowy-head-3611-rev.jpg");
+            p.setImagePath("img_products/kask-zimowy-head-3611-rev.png");
             p.setAvailability(12);
             p.setBrand("Head");
             p.setCategory(category);
@@ -288,7 +288,7 @@ public class DataLoader implements CommandLineRunner {
             productRepository.save(p);
 
             p = new Product();
-            p.setImagePath("img_products/kask-zimowy-head-3611-rev.jpg");
+            p.setImagePath("img_products/kask-zimowy-head-3611-rev.png");
             p.setAvailability(12);
             p.setBrand("Head");
             p.setCategory(category);
@@ -324,7 +324,7 @@ public class DataLoader implements CommandLineRunner {
             productRepository.save(p);
 
             p = new Product();
-            p.setImagePath("img_products/kask-zimowy-poc-0114-obex-bc-mips.jpg");
+            p.setImagePath("img_products/kask-zimowy-poc-0114-obex-bc-mips.png");
             p.setAvailability(12);
             p.setBrand("Poc");
             p.setCategory(category);
@@ -336,7 +336,7 @@ public class DataLoader implements CommandLineRunner {
             productRepository.save(p);
 
             p = new Product();
-            p.setImagePath("img_products/kask-zimowy-poc-0114-obex-bc-mips.jpg");
+            p.setImagePath("img_products/kask-zimowy-poc-0114-obex-bc-mips.png");
             p.setAvailability(12);
             p.setBrand("Poc");
             p.setCategory(category);
@@ -353,7 +353,7 @@ public class DataLoader implements CommandLineRunner {
             Category category = optionalCategory.get();
 
             Product p = new Product();
-            p.setImagePath("img_products/kije-narciarskie-one-way-1323-gt-13-comp-mag.jpg");
+            p.setImagePath("img_products/kije-narciarskie-one-way-1323-gt-13-comp-mag.png");
             p.setAvailability(12);
             p.setBrand("One Way");
             p.setCategory(category);
@@ -365,7 +365,7 @@ public class DataLoader implements CommandLineRunner {
             productRepository.save(p);
 
             p = new Product();
-            p.setImagePath("img_products/kije-narciarskie-one-way-1323-gt-13-comp-mag.jpg");
+            p.setImagePath("img_products/kije-narciarskie-one-way-1323-gt-13-comp-mag.png");
             p.setAvailability(12);
             p.setBrand("One Way");
             p.setCategory(category);
@@ -377,7 +377,7 @@ public class DataLoader implements CommandLineRunner {
             productRepository.save(p);
 
             p = new Product();
-            p.setImagePath("img_products/kije-narciarskie-one-way-1323-gt-13-comp-mag.jpg");
+            p.setImagePath("img_products/kije-narciarskie-one-way-1323-gt-13-comp-mag.png");
             p.setAvailability(12);
             p.setBrand("One Way");
             p.setCategory(category);
@@ -389,7 +389,7 @@ public class DataLoader implements CommandLineRunner {
             productRepository.save(p);
 
             p = new Product();
-            p.setImagePath("img_products/kije-narciarskie-one-way-1323-gt-13-comp-mag.jpg");
+            p.setImagePath("img_products/kije-narciarskie-one-way-1323-gt-13-comp-mag.png");
             p.setAvailability(12);
             p.setBrand("One Way");
             p.setCategory(category);
@@ -401,7 +401,7 @@ public class DataLoader implements CommandLineRunner {
             productRepository.save(p);
 
             p = new Product();
-            p.setImagePath("img_products/kije-narciarskie-one-way-1721-gt-18.jpg");
+            p.setImagePath("img_products/kije-narciarskie-one-way-1721-gt-18.png");
             p.setAvailability(12);
             p.setBrand("One Way");
             p.setCategory(category);
@@ -413,7 +413,7 @@ public class DataLoader implements CommandLineRunner {
             productRepository.save(p);
 
             p = new Product();
-            p.setImagePath("img_products/kije-narciarskie-one-way-1721-gt-18.jpg");
+            p.setImagePath("img_products/kije-narciarskie-one-way-1721-gt-18.png");
             p.setAvailability(12);
             p.setBrand("One Way");
             p.setCategory(category);
@@ -425,7 +425,7 @@ public class DataLoader implements CommandLineRunner {
             productRepository.save(p);
 
             p = new Product();
-            p.setImagePath("img_products/kije-narciarskie-one-way-1721-gt-18.jpg");
+            p.setImagePath("img_products/kije-narciarskie-one-way-1721-gt-18.png");
             p.setAvailability(12);
             p.setBrand("One Way");
             p.setCategory(category);
@@ -437,7 +437,7 @@ public class DataLoader implements CommandLineRunner {
             productRepository.save(p);
 
             p = new Product();
-            p.setImagePath("img_products/kije-narciarskie-one-way-1721-gt-18.jpg");
+            p.setImagePath("img_products/kije-narciarskie-one-way-1721-gt-18.png");
             p.setAvailability(12);
             p.setBrand("One Way");
             p.setCategory(category);
@@ -465,7 +465,7 @@ public class DataLoader implements CommandLineRunner {
             productRepository.save(p);
 
             p = new Product();
-            p.setImagePath("img_products/gogle-oakley-7110-flight-path-large.jpg");
+            p.setImagePath("img_products/gogle-oakley-7110-flight-path-large.png");
             p.setAvailability(42);
             p.setBrand("Oakley");
             p.setCategory(category);
@@ -493,7 +493,7 @@ public class DataLoader implements CommandLineRunner {
             Category category = optionalCategory.get();
 
             Product p = new Product();
-            p.setImagePath("img_products/deska-snowboardowa-ride-0023-twinpig-m.jpg");
+            p.setImagePath("img_products/deska-snowboardowa-ride-0023-twinpig-m.png");
             p.setAvailability(32);
             p.setBrand("Ride");
             p.setCategory(category);
@@ -505,7 +505,7 @@ public class DataLoader implements CommandLineRunner {
             productRepository.save(p);
 
             p = new Product();
-            p.setImagePath("img_products/deska-snowboardowa-ride-0023-twinpig-m.jpg");
+            p.setImagePath("img_products/deska-snowboardowa-ride-0023-twinpig-m.png");
             p.setAvailability(32);
             p.setBrand("Ride");
             p.setCategory(category);
@@ -517,7 +517,7 @@ public class DataLoader implements CommandLineRunner {
             productRepository.save(p);
 
             p = new Product();
-            p.setImagePath("img_products/deska-snowboardowa-lib-tech-n054-cortado.jpg");
+            p.setImagePath("img_products/deska-snowboardowa-lib-tech-n054-cortado.png");
             p.setAvailability(32);
             p.setBrand("Lib Tech");
             p.setCategory(category);
@@ -529,7 +529,7 @@ public class DataLoader implements CommandLineRunner {
             productRepository.save(p);
 
             p = new Product();
-            p.setImagePath("img_products/deska-snowboardowa-lib-tech-n054-cortado.jpg");
+            p.setImagePath("img_products/deska-snowboardowa-lib-tech-n054-cortado.png");
             p.setAvailability(32);
             p.setBrand("Lib Tech");
             p.setCategory(category);
@@ -582,7 +582,7 @@ public class DataLoader implements CommandLineRunner {
             Category category = optionalCategory.get();
 
             Product p = new Product();
-            p.setImagePath("img_products/buty-snowboardowe-thirtytwo-0514-lashed-double-boa-m.jpg");
+            p.setImagePath("img_products/buty-snowboardowe-thirtytwo-0514-lashed-double-boa-m.png");
             p.setAvailability(32);
             p.setBrand("Thirtytwo");
             p.setCategory(category);
@@ -594,7 +594,7 @@ public class DataLoader implements CommandLineRunner {
             productRepository.save(p);
 
             p = new Product();
-            p.setImagePath("img_products/buty-snowboardowe-thirtytwo-0514-lashed-double-boa-m.jpg");
+            p.setImagePath("img_products/buty-snowboardowe-thirtytwo-0514-lashed-double-boa-m.png");
             p.setAvailability(12);
             p.setBrand("Thirtytwo");
             p.setCategory(category);
@@ -606,7 +606,7 @@ public class DataLoader implements CommandLineRunner {
             productRepository.save(p);
 
             p = new Product();
-            p.setImagePath("img_products/buty-snowboardowe-thirtytwo-0514-lashed-double-boa-m.jpg");
+            p.setImagePath("img_products/buty-snowboardowe-thirtytwo-0514-lashed-double-boa-m.png");
             p.setAvailability(15);
             p.setBrand("Thirtytwo");
             p.setCategory(category);
@@ -618,7 +618,7 @@ public class DataLoader implements CommandLineRunner {
             productRepository.save(p);
 
             p = new Product();
-            p.setImagePath("img_products/buty-snowboardowe-dc-0077-phantom-m.jpg");
+            p.setImagePath("img_products/buty-snowboardowe-dc-0077-phantom-m.png");
             p.setAvailability(15);
             p.setBrand("DC");
             p.setCategory(category);
@@ -630,7 +630,7 @@ public class DataLoader implements CommandLineRunner {
             productRepository.save(p);
 
             p = new Product();
-            p.setImagePath("img_products/buty-snowboardowe-dc-0077-phantom-m.jpg");
+            p.setImagePath("img_products/buty-snowboardowe-dc-0077-phantom-m.png");
             p.setAvailability(17);
             p.setBrand("DC");
             p.setCategory(category);
@@ -642,7 +642,7 @@ public class DataLoader implements CommandLineRunner {
             productRepository.save(p);
 
             p = new Product();
-            p.setImagePath("img_products/buty-snowboardowe-dc-0077-phantom-m.jpg");
+            p.setImagePath("img_products/buty-snowboardowe-dc-0077-phantom-m.png");
             p.setAvailability(25);
             p.setBrand("DC");
             p.setCategory(category);
@@ -654,7 +654,7 @@ public class DataLoader implements CommandLineRunner {
             productRepository.save(p);
 
             p = new Product();
-            p.setImagePath("img_products/buty-snowboardowe-dc-0080-transcend-m.jpg");
+            p.setImagePath("img_products/buty-snowboardowe-dc-0080-transcend-m.png");
             p.setAvailability(25);
             p.setBrand("DC");
             p.setCategory(category);
@@ -666,7 +666,7 @@ public class DataLoader implements CommandLineRunner {
             productRepository.save(p);
 
             p = new Product();
-            p.setImagePath("img_products/buty-snowboardowe-dc-0080-transcend-m.jpg");
+            p.setImagePath("img_products/buty-snowboardowe-dc-0080-transcend-m.png");
             p.setAvailability(25);
             p.setBrand("DC");
             p.setCategory(category);
@@ -678,7 +678,7 @@ public class DataLoader implements CommandLineRunner {
             productRepository.save(p);
 
             p = new Product();
-            p.setImagePath("img_products/buty-snowboardowe-dc-0080-transcend-m.jpg");
+            p.setImagePath("img_products/buty-snowboardowe-dc-0080-transcend-m.png");
             p.setAvailability(25);
             p.setBrand("DC");
             p.setCategory(category);
