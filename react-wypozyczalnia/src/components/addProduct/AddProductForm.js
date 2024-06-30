@@ -88,7 +88,7 @@ const AddProductForm = () => {
         style={{ background: "linear-gradient(-15deg, #4a87a2, #86cce9)" }}
       >
         <Container
-          className="align-self-center py-5 px-4"
+          className="align-self-center px-5 m-5"
           style={{
             backgroundColor: "#fff",
             borderRadius: "15px",
@@ -102,95 +102,119 @@ const AddProductForm = () => {
 
             <Col xs={12} md={12}>
               <Form onSubmit={handleSubmit}>
-                <Form.Group className="mb-3 ps-1 pe-1">
-                  <Form.Label>Marka:</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="brand"
-                    placeholder="Marka"
-                    value={formData.brand}
-                    onChange={handleChange}
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3 ps-1 pe-1">
-                  <Form.Label>Model:</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="model"
-                    placeholder="Model"
-                    value={formData.model}
-                    onChange={handleChange}
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3 ps-1 pe-1">
-                  <Form.Label>Rozmiar:</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="size"
-                    placeholder="Rozmiar"
-                    value={formData.size}
-                    onChange={handleChange}
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3 ps-1 pe-1">
-                  <Form.Label>Typ:</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="type"
-                    placeholder="Typ"
-                    value={formData.type}
-                    onChange={handleChange}
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3 ps-1 pe-1">
-                  <Form.Label>Cena Jednostkowa:</Form.Label>
-                  <Form.Control
-                    type="number"
-                    name="unitPrice"
-                    placeholder="Cena Jednostkowa"
-                    value={formData.unitPrice}
-                    onChange={handleChange}
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3 ps-1 pe-1">
-                  <Form.Label>Dostępność:</Form.Label>
-                  <Form.Control
-                    type="number"
-                    name="availability"
-                    placeholder="Dostępność"
-                    value={formData.availability}
-                    onChange={handleChange}
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3 ps-1 pe-1">
-                  <Form.Label>Stan:</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="conditionState"
-                    placeholder="Stan"
-                    value={formData.conditionState}
-                    onChange={handleChange}
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3 ps-1 pe-1">
-                  <Form.Label>Kategoria:</Form.Label>
-                  <Form.Control
-                    as="select"
-                    name="category"
-                    value={formData.category}
-                    onChange={handleChange}
-                  >
-                    <option value="">Wybierz kategorię</option>
-                    {categories.map((category) => (
-                      <option
-                        key={category.categoryId}
-                        value={category.categoryName}
+                <Row>
+                  <Col md={6}>
+                    <Form.Group className="mb-3 ps-1 pe-1">
+                      <Form.Label>Marka:</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="brand"
+                        placeholder="Marka"
+                        value={formData.brand}
+                        onChange={handleChange}
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col md={6}>
+                    <Form.Group className="mb-3 ps-1 pe-1">
+                      <Form.Label>Model:</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="model"
+                        placeholder="Model"
+                        value={formData.model}
+                        onChange={handleChange}
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col md={6}>
+                    <Form.Group className="mb-3 ps-1 pe-1">
+                      <Form.Label>Rozmiar:</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="size"
+                        placeholder="Rozmiar"
+                        value={formData.size}
+                        onChange={handleChange}
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col md={6}>
+                    <Form.Group className="mb-3 ps-1 pe-1">
+                      <Form.Label>Typ:</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="type"
+                        placeholder="Typ"
+                        value={formData.type}
+                        onChange={handleChange}
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col md={6}>
+                    <Form.Group className="mb-3 ps-1 pe-1">
+                      <Form.Label>Cena Jednostkowa:</Form.Label>
+                      <Form.Control
+                        type="number"
+                        name="unitPrice"
+                        placeholder="Cena Jednostkowa"
+                        value={formData.unitPrice}
+                        onChange={handleChange}
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col md={6}>
+                    <Form.Group className="mb-3 ps-1 pe-1">
+                      <Form.Label>Dostępność:</Form.Label>
+                      <Form.Control
+                        type="number"
+                        name="availability"
+                        placeholder="Dostępność"
+                        value={formData.availability}
+                        onChange={handleChange}
+                      />
+                    </Form.Group>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col md={6}>
+                    <Form.Group className="mb-3 ps-1 pe-1">
+                      <Form.Label>Stan:</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="conditionState"
+                        placeholder="Stan"
+                        value={formData.conditionState}
+                        onChange={handleChange}
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col md={6}>
+                    <Form.Group className="mb-3 ps-1 pe-1">
+                      <Form.Label>Kategoria:</Form.Label>
+                      <Form.Control
+                        as="select"
+                        name="category"
+                        value={formData.category}
+                        onChange={handleChange}
                       >
-                        {category.categoryName}
-                      </option>
-                    ))}
-                  </Form.Control>
-                </Form.Group>
+                        <option value="">Wybierz kategorię</option>
+                        {categories.map((category) => (
+                          <option
+                            key={category.categoryId}
+                            value={category.categoryName}
+                          >
+                            {category.categoryName}
+                          </option>
+                        ))}
+                      </Form.Control>
+                    </Form.Group>
+                  </Col>
+                </Row>
                 <Form.Group className="mb-3 ps-1 pe-1">
                   <Form.Label>Ścieżka Obrazu:</Form.Label>
                   <Form.Control

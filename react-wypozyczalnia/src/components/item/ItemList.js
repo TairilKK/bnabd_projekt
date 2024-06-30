@@ -99,17 +99,18 @@ const ItemList = () => {
       style={{
         backgroundImage: `url("background_2xres.jpg"), linear-gradient(to bottom, #fff, #f0f0f0, #fff)`,
         backgroundRepeat: "no-repeat",
-        backgroundSize: "contain",
+        backgroundSize: "100%, auto", // Use contain to prevent background image from changing its height
+        backgroundPosition: "top center", // Align background image to top center
         backgroundColor: "#dbf2ff",
         paddingTop: "25px",
         paddingBottom: "25px",
+        minHeight: "100vh",
       }}
     >
       <Container
         className="full-height-container p-5"
         style={{
           background: "rgba(240, 240, 240, 0.9)",
-          height: "100%",
           borderRadius: "30px",
         }}
       >
