@@ -15,9 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.boot.CommandLineRunner;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static com.alibou.security.user.Role.CLIENT;
 import static com.alibou.security.user.Role.EMPLOYEE;
@@ -691,6 +689,27 @@ public class DataLoader implements CommandLineRunner {
         }
     }
 
+    public static List<User> createClients(int n) {
+        List<User> clients = new ArrayList<>();
+        String[] firstNames = {"Anna", "Bartosz", "Cezary", "Diana", "Emil", "Fiona", "Grzegorz", "Hanna", "Ireneusz", "Julia"};
+        String[] lastNames = {"Kowalski", "Nowak", "Wiśniewski", "Wójcik", "Kowalczyk", "Kamiński", "Lewandowski", "Zieliński", "Szymański", "Woźniak"};
+
+        Random random = new Random();
+
+        for (int i = 0; i < n; i++) {
+            User client = new User();
+            client.setFirstName(firstNames[random.nextInt(firstNames.length)]);
+            client.setLastName(lastNames[random.nextInt(lastNames.length)]);
+            client.setEmail("client" + (i + 1) + "@mail.com");
+            client.setPassword("password" + (i + 1));
+            client.setRole(CLIENT);
+
+            clients.add(client);
+        }
+
+        return clients;
+    }
+
     private void InsertRents() {
         try {
             User client = new User();
@@ -710,6 +729,9 @@ public class DataLoader implements CommandLineRunner {
             employee.setRole(EMPLOYEE);
 
             employee = userRepository.save(employee);  // Upewnij się, że employee jest zarządzany
+
+            List<User> clients = createClients(20);
+            userRepository.saveAll(clients);
 
             Rent r = new Rent();
             r.setClient(client);

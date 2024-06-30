@@ -13,4 +13,12 @@ public class UserDTO {
     private String lastName;
     private String email;
     private String role;
+
+    public UserDTO(User user) {
+        this.id = user.getId();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.email = user.getEmail();
+        this.role = user.getRole().toString();
+    }
 }

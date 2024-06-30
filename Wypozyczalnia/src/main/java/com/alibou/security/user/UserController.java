@@ -1,6 +1,9 @@
 package com.alibou.security.user;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,8 +28,11 @@ public class UserController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<UserDTO>> getAllUsers() {
-        List<UserDTO> users = service.getAllUsers();
+    public ResponseEntity<Page<UserDTO>> getAllUsers(
+            @PageableDefault(size = 10) Pageable pageable,
+            @RequestParam(required = false) String filter,
+            @RequestParam(required = false, defaultValue = "role") String sortBy) {
+        Page<UserDTO> users = service.getAllUsers(pageable, filter, sortBy);
         return ResponseEntity.ok(users);
     }
 
