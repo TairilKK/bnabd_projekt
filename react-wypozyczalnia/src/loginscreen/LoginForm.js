@@ -19,12 +19,13 @@ const LoginForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     apiClient
-      .post("/auth/authenticate", formData)
+      .post("http://localhost:8090/api/v1/auth/authenticate", formData)
       .then((response) => {
         console.log("Logged in:", response.data);
         if (response.data.access_token) {
           localStorage.setItem("token", response.data.access_token);
           localStorage.setItem("role", response.data.user.role);
+          localStorage.setItem("clientId", response.data.user.id); // Zapisz clientId w localStorage
           toast.success("Zalogowano pomyślnie.", { position: "bottom-right" });
           console.log(
             "Token zapisany w localStorage:",

@@ -1,27 +1,27 @@
 import React, { useState } from "react";
 import { Button, InputGroup, FormControl } from "react-bootstrap";
 
-const NumberSpinner = () => {
-  const [count, setCount] = useState(0);
-
+const NumberSpinner = ({ maxQuantity, value, onChange }) => {
   return (
-    <div
-      style={{
-        maxWidth: "100px",
-      }}
-    >
+    <div style={{ maxWidth: "100px" }}>
       <InputGroup size="sm">
         <Button
           variant="outline-secondary"
-          onClick={() => setCount(count === 0 ? 0 : count - 1)}
+          onClick={() => onChange(Math.max(0, value - 1))}
         >
           -
         </Button>
         <FormControl
-          value={count}
-          onChange={(e) => setCount(parseInt(e.target.value, 10))}
+          value={value}
+          onChange={(e) => {
+            const newValue = parseInt(e.target.value, 10);
+            onChange(newValue > maxQuantity ? maxQuantity : newValue);
+          }}
         />
-        <Button variant="outline-secondary" onClick={() => setCount(count + 1)}>
+        <Button
+          variant="outline-secondary"
+          onClick={() => onChange(Math.min(maxQuantity, value + 1))}
+        >
           +
         </Button>
       </InputGroup>

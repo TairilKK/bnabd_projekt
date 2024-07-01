@@ -7,12 +7,14 @@ import "react-datepicker/dist/react-datepicker.css";
 import "../itemdetail/DataPicker.css";
 import NumberSpinner from "../components/item/NumberSpinner";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const ItemDetail = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -33,6 +35,86 @@ const ItemDetail = () => {
     const [start, end] = dates;
     setStartDate(start);
     setEndDate(end);
+  };
+
+  const calculateRentPrice = () => {
+    if (!startDate || !endDate || !product) return 0;
+    const diffTime = Math.abs(endDate - startDate);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return quantity * product.unitPrice * diffDays;
+  };
+
+  const checkAvailability = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get(
+        `http://localhost:8090/api/v1/rents/availability`,
+        {
+          params: {
+            productId: id,
+            startDate: startDate.toISOString().split("T")[0],
+            endDate: endDate.toISOString().split("T")[0],
+            requestedQuantity: quantity,
+          },
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error checking availability", error);
+      return false;
+    }
+  };
+
+  const handleReserve = async () => {
+    try {
+      const clientId = localStorage.getItem("clientId"); // Zakładając, że clientId jest przechowywany w localStorage
+      const token = localStorage.getItem("token"); // Zakładając, że token jest przechowywany w localStorage
+
+      // Logowanie wartości do konsoli
+      console.log("Client ID:", clientId);
+      console.log("Product ID:", id);
+      console.log("Quantity:", quantity);
+      console.log("Start Date:", startDate);
+      console.log("End Date:", endDate);
+
+      if (!clientId || !id || !startDate || !endDate || quantity <= 0) {
+        throw new Error("Invalid input");
+      }
+
+      const available = await checkAvailability();
+      if (!available) {
+        toast.error("Brak wystarczającej ilości sprzętu na wybrany termin.");
+        return;
+      }
+
+      const rentRequest = {
+        clientId: parseInt(clientId),
+        productId: parseInt(id),
+        quantity: quantity,
+        rentPrice: calculateRentPrice(),
+        rentStart: startDate.toISOString().split("T")[0], // Konwersja daty na format YYYY-MM-DD
+        rentEnd: endDate.toISOString().split("T")[0], // Konwersja daty na format YYYY-MM-DD
+      };
+
+      const response = await axios.post(
+        `http://localhost:8090/api/v1/rents/reserve`,
+        rentRequest,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Dodanie tokenu do nagłówków
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("Reservation successful:", response.data);
+      toast.success("Rezerwacja zakończona sukcesem!");
+    } catch (error) {
+      console.error("Error making the reservation", error);
+      toast.error("Wystąpił błąd podczas dokonywania rezerwacji.");
+    }
   };
 
   if (!product) {
@@ -94,21 +176,25 @@ const ItemDetail = () => {
             />
             <div>
               <p>Wybierz ilość:</p>
-              <NumberSpinner />
-              <Link to="/login">
-                <Button
-                  className="mt-3"
-                  style={{
-                    backgroundColor: "#02354f",
-                  }}
-                >
-                  Zarezerwuj
-                </Button>
-              </Link>
+              <NumberSpinner
+                value={quantity}
+                maxQuantity={product.availability}
+                onChange={(val) => setQuantity(val)}
+              />
+              <Button
+                className="mt-3"
+                style={{
+                  backgroundColor: "#02354f",
+                }}
+                onClick={handleReserve}
+              >
+                Zarezerwuj
+              </Button>
             </div>
             <div>
               <p>Start Date: {startDate ? startDate.toString() : ""}</p>
               <p>End Date: {endDate ? endDate.toString() : ""}</p>
+              <p>Cena wynajmu: {calculateRentPrice()} zł</p>
             </div>
           </Col>
         </Row>
