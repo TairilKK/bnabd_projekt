@@ -4,8 +4,6 @@ import com.alibou.security.categories.Category;
 import com.alibou.security.categories.CategoryRepository;
 import com.alibou.security.products.Product;
 import com.alibou.security.products.ProductRepository;
-import com.alibou.security.rentdetails.RentDetail;
-import com.alibou.security.rentdetails.RentDetailRepository;
 import com.alibou.security.rents.Rent;
 import com.alibou.security.rents.RentRepository;
 import com.alibou.security.user.User;
@@ -34,9 +32,6 @@ public class DataLoader implements CommandLineRunner {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private RentDetailRepository rentDetailRepository;
 
     private void InsertProducts(){
         List<String> cName = Arrays.asList(
@@ -710,7 +705,7 @@ public class DataLoader implements CommandLineRunner {
         return clients;
     }
 
-    private void InsertRents() {
+    /*private void InsertRents() {
         try {
             User client = new User();
             client.setFirstName("Test");
@@ -748,13 +743,13 @@ public class DataLoader implements CommandLineRunner {
             e.printStackTrace();
         }
 
-    }
+    }*/
 
     @Override
     public void run(String... args) throws Exception {
         try {
             InsertProducts();
-            InsertRents();
+            //InsertRents();
         } catch (Exception e) {
             System.out.println("Error executing CommandLineRunner: " + e.getMessage());
             e.printStackTrace();

@@ -21,8 +21,8 @@ public class ProductManager {
         this.categoryRepository = categoryRepository;
     }
 
-    public Optional<Product> FindProductById(Long id) {
-        return productRepository.findById(id);
+    public Optional<Product> FindProductById(Long productId) {
+        return productRepository.findById(productId);
     }
     public Page<Product> FindAllProducts(Pageable pageable) {
         return productRepository.findAll(pageable);

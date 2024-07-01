@@ -34,10 +34,6 @@ public class User implements UserDetails {
   @Enumerated(EnumType.STRING)
   private Role role;
 
-  @OneToMany(cascade = CascadeType.MERGE, mappedBy = "employee")
-  @JsonManagedReference
-  private List<Rent> rentsEmployee;
-
   @OneToMany(cascade = CascadeType.MERGE, mappedBy = "client")
   @JsonManagedReference
   private List<Rent> rentsClient;

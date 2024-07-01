@@ -2,6 +2,7 @@ package com.alibou.security.config;
 
 import com.alibou.security.user.Permission;
 import com.alibou.security.user.Role;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,8 +33,6 @@ public class SecurityConfiguration {
             "/api/v1/auth/**",
             "/api/v1/products/**",
             "/api/v1/category/**",
-            "/api/v1/rents/**",
-            "/api/v1/rentdetails/**",
             "/v2/api-docs",
             "/v3/api-docs",
             "/v3/api-docs/**",
@@ -65,6 +64,9 @@ public class SecurityConfiguration {
                         .requestMatchers(PUT, "/api/v1/client/**").hasAuthority(Permission.CLIENT_UPDATE.name())
                         .requestMatchers(GET, "/api/v1/users/all").hasRole("EMPLOYEE")
                         .requestMatchers(PUT, "/api/v1/users/role/**").hasRole("EMPLOYEE")
+                        .requestMatchers(GET, "/api/v1/rents/client").hasRole("CLIENT")
+                        .requestMatchers(POST, "/api/v1/rents/reserve").hasRole("CLIENT")
+                        .requestMatchers(GET, "/api/v1/rents/availability").hasRole("CLIENT")
                         .requestMatchers(GET, "/").permitAll()
                         .anyRequest().authenticated()
                 )

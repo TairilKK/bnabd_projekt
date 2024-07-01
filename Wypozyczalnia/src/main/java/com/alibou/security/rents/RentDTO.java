@@ -2,14 +2,20 @@ package com.alibou.security.rents;
 
 import java.util.Date;
 
-public record RentDTO(Long rentId, Long employeeId, Long clientId, Date rentStart, Date rentEnd) {
+public record RentDTO(Long rentId, Long clientId, Long productId, String productName, String productCategory, String productSize, Long quantity, Double rentPrice, Date rentStart, Date rentEnd, Boolean isCompleted) {
     public RentDTO(Rent rent) {
         this(
                 rent.getRentId(),
-                rent.getEmployee() != null ? rent.getEmployee().getId() : null,
                 rent.getClient() != null ? rent.getClient().getId() : null,
+                rent.getProduct() != null ? rent.getProduct().getProductId() : null,
+                rent.getProduct() != null ? rent.getProduct().getBrand() : null,
+                rent.getProduct() != null ? rent.getProduct().getCategory().getCategoryName() : null,
+                rent.getProduct() != null ? rent.getProduct().getSize() : null,
+                rent.getQuantity(),
+                rent.getRentPrice(),
                 rent.getRentStart(),
-                rent.getRentEnd()
+                rent.getRentEnd(),
+                rent.getIsCompleted()
         );
     }
 }
