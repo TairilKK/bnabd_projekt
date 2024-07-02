@@ -41,6 +41,9 @@ public class UserService {
     public Optional<User> FindById(Long id) {
         return repository.findById(id);
     }
+    public Optional<User> FindByEmail(String email) {
+        return repository.findByEmail(email);
+    }
 
     public Page<UserDTO> getAllUsers(Pageable pageable, String filter, String sortBy) {
         Sort sort = Sort.by(sortBy).reverse();

@@ -3,9 +3,16 @@ package com.alibou.security.rents;
 import com.alibou.security.products.ProductManager;
 import com.alibou.security.user.User;
 import com.alibou.security.user.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 
@@ -30,12 +37,19 @@ public class RentApi {
     }
 
     @GetMapping("/client")
-    public List<RentDTO> findClientRents(@RequestParam Long clientId) {
+    public Page<RentDTO> findClientRents(
+            @RequestParam Long clientId,
+            @RequestParam(required = false) String sortBy,
+            @RequestParam(required = false, defaultValue = "asc") String sortDir,
+            Pageable pageable) {
+
         System.out.println("findClientRents called with clientId: " + clientId);
         User client = userService.FindById(clientId).orElseThrow(() -> new RuntimeException("Client not found"));
         System.out.println("Client found: " + client);
-        List<RentDTO> rents = rentManager.FindByClient(client);
+
+        Page<RentDTO> rents = rentManager.FindByClient(client, sortBy, sortDir, pageable);
         rents.forEach(rent -> System.out.println("Rent: " + rent));
+
         return rents;
     }
 
@@ -68,6 +82,31 @@ public class RentApi {
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate,
             @RequestParam int requestedQuantity) {
         return rentManager.isProductAvailable(productId, startDate, endDate, requestedQuantity);
+    }
+
+    @DeleteMapping("/{rentId}")
+    public ResponseEntity<?> deleteRent(@PathVariable Long rentId, Authentication authentication) {
+        System.out.println("deleteRent called with rentId: " + rentId);
+
+        // Znajdź zamówienie na podstawie rentId
+        Rent rent = rentManager.FindById(rentId);
+        if (rent == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Rent not found");
+        }
+
+        // Pobierz ID aktualnego użytkownika z tokenu JWT
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        User currentUser = userService.FindByEmail(userDetails.getUsername())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // Sprawdź, czy użytkownik jest właścicielem zamówienia
+        if (!rent.getClient().getId().equals(currentUser.getId())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You are not authorized to delete this rent");
+        }
+
+        // Usuń zamówienie
+        rentManager.deleteById(rentId);
+        return ResponseEntity.ok("Rent deleted successfully");
     }
 
 }

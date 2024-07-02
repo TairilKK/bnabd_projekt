@@ -67,6 +67,7 @@ public class SecurityConfiguration {
                         .requestMatchers(GET, "/api/v1/rents/client").hasRole("CLIENT")
                         .requestMatchers(POST, "/api/v1/rents/reserve").hasRole("CLIENT")
                         .requestMatchers(GET, "/api/v1/rents/availability").hasRole("CLIENT")
+                        .requestMatchers(DELETE, "/api/v1/rents/**").hasRole("CLIENT")
                         .requestMatchers(GET, "/").permitAll()
                         .anyRequest().authenticated()
                 )

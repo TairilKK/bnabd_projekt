@@ -2,6 +2,10 @@ package com.alibou.security.rents;
 
 import com.alibou.security.products.ProductManager;
 import com.alibou.security.user.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -28,14 +32,16 @@ public class RentManager {
         return rentRepository.findById(id).orElse(null);
     }
 
-    public List<RentDTO> FindByClient(User client) {
+    public Page<RentDTO> FindByClient(User client, String sortBy, String sortDir, Pageable pageable) {
         System.out.println("FindByClient called with client: " + client);
-        List<Rent> rents = rentRepository.findByClient(client);
-        rents.forEach(rent -> {
-            System.out.println("Rent ID: " + rent.getRentId());
-            System.out.println("Product: " + (rent.getProduct() != null ? rent.getProduct().getBrand() : "No product"));
-        });
-        return mapToRentDTOList(rents);
+
+        Sort sort = Sort.by(sortBy != null ? sortBy : "rentStart");
+        sort = sortDir.equalsIgnoreCase("desc") ? sort.descending() : sort.ascending();
+
+        Pageable sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
+        Page<Rent> rents = rentRepository.findByClient(client, sortedPageable);
+
+        return rents.map(RentDTO::new);
     }
 
 
@@ -57,6 +63,11 @@ public class RentManager {
                 .orElseThrow(() -> new RuntimeException("Product not found"))
                 .getAvailability();
         return (totalAvailable - totalReserved) >= requestedQuantity;
+    }
+
+    public void deleteById(Long rentId) {
+        System.out.println("deleteById called with rentId: " + rentId);
+        rentRepository.deleteById(rentId);
     }
 
 }
