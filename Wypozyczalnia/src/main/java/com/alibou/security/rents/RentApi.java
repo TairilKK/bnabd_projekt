@@ -1,6 +1,7 @@
 package com.alibou.security.rents;
 
 import com.alibou.security.products.ProductManager;
+import com.alibou.security.user.Role;
 import com.alibou.security.user.User;
 import com.alibou.security.user.UserService;
 import org.springframework.data.domain.Page;
@@ -88,25 +89,35 @@ public class RentApi {
     public ResponseEntity<?> deleteRent(@PathVariable Long rentId, Authentication authentication) {
         System.out.println("deleteRent called with rentId: " + rentId);
 
-        // Znajdź zamówienie na podstawie rentId
         Rent rent = rentManager.FindById(rentId);
         if (rent == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Rent not found");
         }
 
-        // Pobierz ID aktualnego użytkownika z tokenu JWT
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         User currentUser = userService.FindByEmail(userDetails.getUsername())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // Sprawdź, czy użytkownik jest właścicielem zamówienia
-        if (!rent.getClient().getId().equals(currentUser.getId())) {
+        // Usunięcie sprawdzania właściciela zamówienia, aby umożliwić pracownikom usuwanie
+        if (currentUser.getRole().equals(Role.CLIENT) && !rent.getClient().getId().equals(currentUser.getId())) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You are not authorized to delete this rent");
         }
 
-        // Usuń zamówienie
         rentManager.deleteById(rentId);
         return ResponseEntity.ok("Rent deleted successfully");
     }
 
+    @PutMapping("/update/{rentId}")
+    public ResponseEntity<?> updateRentStatus(@PathVariable Long rentId, @RequestBody RentUpdateRequest request) {
+        Rent rent = rentManager.FindById(rentId);
+        if (rent == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Rent not found");
+        }
+
+        rent.setIsCompleted(request.getIsCompleted());
+        rentManager.save(rent);
+
+        return ResponseEntity.ok(new RentDTO(rent));
+    }
 }
+
