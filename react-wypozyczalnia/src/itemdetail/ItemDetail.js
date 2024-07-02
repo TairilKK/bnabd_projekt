@@ -15,6 +15,7 @@ const ItemDetail = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const [role, setRole] = useState(null);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -29,6 +30,9 @@ const ItemDetail = () => {
     };
 
     fetchProduct();
+
+    const userRole = localStorage.getItem("role");
+    setRole(userRole);
   }, [id]);
 
   const handleSelect = (dates) => {
@@ -70,15 +74,8 @@ const ItemDetail = () => {
 
   const handleReserve = async () => {
     try {
-      const clientId = localStorage.getItem("clientId"); // Zakładając, że clientId jest przechowywany w localStorage
-      const token = localStorage.getItem("token"); // Zakładając, że token jest przechowywany w localStorage
-
-      // Logowanie wartości do konsoli
-      console.log("Client ID:", clientId);
-      console.log("Product ID:", id);
-      console.log("Quantity:", quantity);
-      console.log("Start Date:", startDate);
-      console.log("End Date:", endDate);
+      const clientId = localStorage.getItem("clientId");
+      const token = localStorage.getItem("token");
 
       if (!clientId || !id || !startDate || !endDate || quantity <= 0) {
         throw new Error("Invalid input");
@@ -95,8 +92,8 @@ const ItemDetail = () => {
         productId: parseInt(id),
         quantity: quantity,
         rentPrice: calculateRentPrice(),
-        rentStart: startDate.toISOString().split("T")[0], // Konwersja daty na format YYYY-MM-DD
-        rentEnd: endDate.toISOString().split("T")[0], // Konwersja daty na format YYYY-MM-DD
+        rentStart: startDate.toISOString().split("T")[0],
+        rentEnd: endDate.toISOString().split("T")[0],
       };
 
       const response = await axios.post(
@@ -104,7 +101,7 @@ const ItemDetail = () => {
         rentRequest,
         {
           headers: {
-            Authorization: `Bearer ${token}`, // Dodanie tokenu do nagłówków
+            Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
         }

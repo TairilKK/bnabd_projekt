@@ -1,22 +1,82 @@
 import React, { useState, useEffect } from "react";
-import { Button, Container, ListGroup } from "react-bootstrap";
+import { Button, Container, ListGroup, Row, Col, Form } from "react-bootstrap";
 import Navbar from "../components/navbar/Navbar";
 import axios from "axios";
 import Footer from "../components/footer/Footer";
 
 const Order = () => {
   const [items, setItems] = useState([]);
+  const [role, setRole] = useState(null);
 
   useEffect(() => {
+    const userRole = localStorage.getItem("role");
+    setRole(userRole);
+
+    if (userRole === "EMPLOYEE") {
+      const token = localStorage.getItem("token");
+      axios
+        .get("http://localhost:8090/api/v1/rents/all", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          setItems(response.data);
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    }
+  }, []);
+
+  const handleCompletedChange = (rentId, currentStatus) => {
+    const token = localStorage.getItem("token");
+    const newStatus = !currentStatus;
+
     axios
-      .get("http://localhost:8090/api/v1/rents/all")
+      .put(
+        `http://localhost:8090/api/v1/rents/update/${rentId}`,
+        { isCompleted: newStatus },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((response) => {
-        setItems(response.data);
+        setItems((prevItems) =>
+          prevItems.map((item) =>
+            item.rentId === rentId ? { ...item, isCompleted: newStatus } : item
+          )
+        );
       })
       .catch((error) => {
-        console.error("Error fetching data:", error);
+        console.error("There was an error updating the rent status!", error);
       });
-  }, []);
+  };
+
+  const handleCancel = (rentId) => {
+    const token = localStorage.getItem("token");
+
+    axios
+      .delete(`http://localhost:8090/api/v1/rents/${rentId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        setItems((prevItems) =>
+          prevItems.filter((item) => item.rentId !== rentId)
+        );
+      })
+      .catch((error) => {
+        console.error("There was an error cancelling the rent!", error);
+      });
+  };
+
+  if (role !== "EMPLOYEE") {
+    return <div>Nie masz uprawnień do przeglądania tej strony.</div>;
+  }
 
   return (
     <div
@@ -32,7 +92,7 @@ const Order = () => {
         style={{
           backgroundImage: `url("background_2xres.jpg")`,
           backgroundRepeat: "no-repeat",
-          backgroundSize: "cover", // ensure the image covers the whole container
+          backgroundSize: "cover",
           backgroundColor: "#dbf2ff",
           paddingTop: "25px",
           paddingBottom: "25px",
@@ -46,29 +106,121 @@ const Order = () => {
             borderRadius: "30px",
           }}
         >
-          <ListGroup variant="flush">
-            {items.map((item) => (
-              <ListGroup.Item
-                key={item.rentId}
-                className="d-flex justify-content-between align-items-center mb-1"
-              >
-                <div className="d-flex align-items-center w-100">
-                  <div className="mr-3 me-1">{item.rentId}.</div>{" "}
-                  <div className="mr-3 me-4">{item.brand}</div>{" "}
-                  <div className="mr-3 me-4">
-                    {" "}
-                    {new Date(item.start).toLocaleDateString()}
-                  </div>{" "}
-                  <div className="mr-3 me-1">
-                    {new Date(item.end).toLocaleDateString()}
-                  </div>
-                </div>
-                <Button variant="warning" className="ml-auto">
-                  Pzyjmij
+          <ListGroup horizontal className="mb-2 d-none d-lg-flex">
+            <ListGroup.Item style={{ flex: 1, fontWeight: "bold" }}>
+              ID
+            </ListGroup.Item>
+            <ListGroup.Item style={{ flex: 2, fontWeight: "bold" }}>
+              ID Produktu
+            </ListGroup.Item>
+            <ListGroup.Item style={{ flex: 1, fontWeight: "bold" }}>
+              Ilość
+            </ListGroup.Item>
+            <ListGroup.Item style={{ flex: 2, fontWeight: "bold" }}>
+              Data Start
+            </ListGroup.Item>
+            <ListGroup.Item style={{ flex: 2, fontWeight: "bold" }}>
+              Data Koniec
+            </ListGroup.Item>
+            <ListGroup.Item style={{ flex: 2, fontWeight: "bold" }}>
+              Cena
+            </ListGroup.Item>
+            <ListGroup.Item style={{ flex: 2, fontWeight: "bold" }}>
+              Zrealizowane
+            </ListGroup.Item>
+            <ListGroup.Item style={{ flex: 1, fontWeight: "bold" }}>
+              Akcje
+            </ListGroup.Item>
+          </ListGroup>
+
+          {items.map((item) => (
+            <ListGroup
+              horizontal
+              className="mb-1 d-none d-lg-flex"
+              key={item.rentId}
+            >
+              <ListGroup.Item style={{ flex: 1 }}>{item.rentId}</ListGroup.Item>
+              <ListGroup.Item style={{ flex: 2 }}>
+                {item.productId}
+              </ListGroup.Item>
+              <ListGroup.Item style={{ flex: 1 }}>
+                {item.quantity}
+              </ListGroup.Item>
+              <ListGroup.Item style={{ flex: 2 }}>
+                {new Date(item.rentStart).toLocaleDateString()}
+              </ListGroup.Item>
+              <ListGroup.Item style={{ flex: 2 }}>
+                {new Date(item.rentEnd).toLocaleDateString()}
+              </ListGroup.Item>
+              <ListGroup.Item style={{ flex: 2 }}>
+                {item.rentPrice}
+              </ListGroup.Item>
+              <ListGroup.Item style={{ flex: 2 }}>
+                <Form.Check
+                  type="switch"
+                  id={`switch-${item.rentId}`}
+                  checked={item.isCompleted}
+                  onChange={() =>
+                    handleCompletedChange(item.rentId, item.isCompleted)
+                  }
+                />
+              </ListGroup.Item>
+              <ListGroup.Item style={{ flex: 1 }}>
+                <Button
+                  variant="danger"
+                  onClick={() => handleCancel(item.rentId)}
+                >
+                  Anuluj
                 </Button>
               </ListGroup.Item>
-            ))}
-          </ListGroup>
+            </ListGroup>
+          ))}
+
+          {items.map((item) => (
+            <Row className="d-lg-none" key={item.rentId}>
+              <Col>
+                <ListGroup.Item>
+                  <strong>ID:</strong> {item.rentId}
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <strong>ID Produktu:</strong> {item.productId}
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <strong>Ilość:</strong> {item.quantity}
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <strong>Data Start:</strong>{" "}
+                  {new Date(item.rentStart).toLocaleDateString()}
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <strong>Data Koniec:</strong>{" "}
+                  {new Date(item.rentEnd).toLocaleDateString()}
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <strong>Cena:</strong> {item.rentPrice}
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <strong>Zrealizowane:</strong>
+                  <Form.Check
+                    type="switch"
+                    id={`switch-${item.rentId}`}
+                    checked={item.isCompleted}
+                    onChange={() =>
+                      handleCompletedChange(item.rentId, item.isCompleted)
+                    }
+                  />
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <Button
+                    variant="warning"
+                    onClick={() => handleCancel(item.rentId)}
+                  >
+                    Anuluj
+                  </Button>
+                </ListGroup.Item>
+              </Col>
+            </Row>
+          ))}
         </Container>
       </div>
       <Footer />
