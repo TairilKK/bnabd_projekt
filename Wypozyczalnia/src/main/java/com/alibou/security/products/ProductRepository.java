@@ -13,6 +13,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Page<Product> findByCategory(Category category, Pageable pageable);
     Page<Product> findByBrand(String brand, Pageable pageable);
     Page<Product> findByCategoryAndBrand(Category category, String brand, Pageable pageable);
+    List<Product> findByCategory(Category category);
 
     @Query("SELECT DISTINCT p.brand FROM Product p")
     List<String> findDistinctBrands();

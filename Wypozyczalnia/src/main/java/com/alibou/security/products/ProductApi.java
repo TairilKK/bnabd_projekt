@@ -9,8 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Sort;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -39,6 +38,39 @@ public class ProductApi {
         } catch (Exception e) {
             throw new RuntimeException("Error saving product", e);
         }
+    }
+
+    @GetMapping("/recommendations")
+    public List<ProductDTO> findRecomendations(@RequestParam("id") Long id){
+        Optional<Product> product = productManager.FindProductById(id);
+        Product p = product.get();
+        String actualCategory = p.getCategory().getCategoryName();
+        String recommendedCategory;
+
+        if (actualCategory.equals("NARTY")) {
+            recommendedCategory = new String("BUTY NARCIARSKIE");
+        }
+        else if (actualCategory.equals("SNOWBOARD")) {
+            recommendedCategory = new String("BUTY SNOWBOARDOWE");
+        }
+        else if (actualCategory.equals("KASKI")) {
+            recommendedCategory = new String("GOGLE");
+        }
+        else if (actualCategory.equals("KIJKI")) {
+            recommendedCategory = new String("NARTY");
+        }
+        else if (actualCategory.equals("BUTY NARCIARSKIE")) {
+            recommendedCategory = new String("NARTY");
+        }
+        else if (actualCategory.equals("BUTY SNOWBOARDOWE")) {
+            recommendedCategory = new String("SNOWBOARD");
+        }
+        else {
+            recommendedCategory = new String("KASKI");
+        }
+        List<Product> recommendations = productManager.findByCategory(recommendedCategory);
+        List<Product> randomProducts = getThreeRandomProducts(recommendations);
+        return mapProductToProductRecord(randomProducts);
     }
 
     @GetMapping("/allbrands")
@@ -80,6 +112,16 @@ public class ProductApi {
             return mapProductToProductRecordPage(productManager.findByCategory(categoryName, pageable));
         else
             return mapProductToProductRecordPage(productManager.findByCategoryAndBrand(categoryName, brand, pageable));
+    }
+
+    private List<Product> getThreeRandomProducts(List<Product> products) {
+        if (products.size() <= 4) {
+            return new ArrayList<>(products);
+        }
+
+        List<Product> copiedList = new ArrayList<>(products);
+        Collections.shuffle(copiedList, new Random());
+        return copiedList.subList(0, 4);
     }
 
     private List<ProductDTO> mapProductToProductRecord(List<Product> products) {

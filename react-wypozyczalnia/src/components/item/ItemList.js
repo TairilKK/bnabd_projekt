@@ -99,8 +99,8 @@ const ItemList = () => {
       style={{
         backgroundImage: `url("background_2xres.jpg"), linear-gradient(to bottom, #fff, #f0f0f0, #fff)`,
         backgroundRepeat: "no-repeat",
-        backgroundSize: "100%, auto", // Use contain to prevent background image from changing its height
-        backgroundPosition: "top center", // Align background image to top center
+        backgroundSize: "100%, auto",
+        backgroundPosition: "top center",
         backgroundColor: "#dbf2ff",
         paddingTop: "25px",
         paddingBottom: "25px",

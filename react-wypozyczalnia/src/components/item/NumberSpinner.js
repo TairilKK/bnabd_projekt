@@ -7,7 +7,7 @@ const NumberSpinner = ({ maxQuantity, value, onChange }) => {
       <InputGroup size="sm">
         <Button
           variant="outline-secondary"
-          onClick={() => onChange(Math.max(0, value - 1))}
+          onClick={() => onChange(Math.max(1, value - 1))}
         >
           -
         </Button>

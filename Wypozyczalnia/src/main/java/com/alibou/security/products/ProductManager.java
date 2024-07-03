@@ -41,6 +41,11 @@ public class ProductManager {
         return productRepository.findByCategory(category.get(), pageable);
     }
 
+    public List<Product> findByCategory(String categoryName) {
+        Optional<Category> category = categoryRepository.findByCategoryName(categoryName);
+        return productRepository.findByCategory(category.get());
+    }
+
     public Page<Product> findByBrand(String brand, Pageable pageable) {
         return productRepository.findByBrand(brand, pageable);
     }
