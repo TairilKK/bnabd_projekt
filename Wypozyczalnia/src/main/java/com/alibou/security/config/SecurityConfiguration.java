@@ -70,6 +70,7 @@ public class SecurityConfiguration {
                         .requestMatchers(DELETE, "/api/v1/rents/**").hasAnyRole("CLIENT", "EMPLOYEE")
                         .requestMatchers(GET, "/api/v1/rents/all").hasRole("EMPLOYEE")
                         .requestMatchers(PUT, "/api/v1/rents/update/**").hasRole("EMPLOYEE")
+                        .requestMatchers(GET, "/api/v1/rents/stats/category").hasRole("EMPLOYEE")
                         .requestMatchers(GET, "/").permitAll()
                         .anyRequest().authenticated()
                 )

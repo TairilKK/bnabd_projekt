@@ -70,4 +70,7 @@ public class RentManager {
         rentRepository.deleteById(rentId);
     }
 
+    public List<RentCategoryStats> getRentStatsByCategory() {
+        return rentRepository.findRentStatsByCategory();
+    }
 }

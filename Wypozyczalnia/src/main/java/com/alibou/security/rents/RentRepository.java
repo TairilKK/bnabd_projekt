@@ -14,4 +14,9 @@ public interface RentRepository extends JpaRepository<Rent, Long> {
     @Query("SELECT r FROM Rent r WHERE r.product.productId = :productId AND " +
             "(r.rentStart <= :endDate AND r.rentEnd >= :startDate)")
     List<Rent> findOverlappingRents(Long productId, Date startDate, Date endDate);
+
+    @Query("SELECT new com.alibou.security.rents.RentCategoryStats(r.product.category.categoryName, COUNT(r), SUM(r.rentPrice)) " +
+            "FROM Rent r " +
+            "GROUP BY r.product.category.categoryName")
+    List<RentCategoryStats> findRentStatsByCategory();
 }

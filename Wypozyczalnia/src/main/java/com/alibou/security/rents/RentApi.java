@@ -119,5 +119,10 @@ public class RentApi {
 
         return ResponseEntity.ok(new RentDTO(rent));
     }
+
+    @GetMapping("/stats/category")
+    public List<RentCategoryStats> getRentStatsByCategory() {
+        return rentManager.getRentStatsByCategory();
+    }
 }
 
