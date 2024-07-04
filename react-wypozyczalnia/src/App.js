@@ -10,6 +10,7 @@ import MyOrders from "./myorders/MyOrders";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AddProductForm from "./components/addProduct/AddProductForm";
+import DashboardPage from "./dashboard/DashboardPage";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/employee" element={<UserList />} />
           <Route path="/myorders" element={<MyOrders />} />
           <Route path="/addproduct" element={<AddProductForm />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
         </Routes>
         <ToastContainer />
       </div>

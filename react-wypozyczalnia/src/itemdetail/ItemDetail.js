@@ -20,6 +20,8 @@ const ItemDetail = () => {
   const [role, setRole] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState([]);
 
+  const today = new Date(); // Dzisiejsza data
+
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -61,6 +63,13 @@ const ItemDetail = () => {
 
   const calculateRentPrice = () => {
     if (!startDate || !endDate || !product) return 0;
+
+    const sameDay = startDate.getTime() === endDate.getTime();
+
+    if (sameDay) {
+      return quantity * product.unitPrice;
+    }
+
     const diffTime = Math.abs(endDate - startDate);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return quantity * product.unitPrice * diffDays;
@@ -220,6 +229,7 @@ const ItemDetail = () => {
                   onChange={handleSelect}
                   startDate={startDate}
                   endDate={endDate}
+                  minDate={today} // Ustawienie minimalnej daty na dzisiejszą datę
                   selectsRange
                   inline
                 />

@@ -6,6 +6,7 @@ import {
   FaShoppingCart,
   FaClipboardList,
   FaUsers,
+  FaChartBar,
 } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
@@ -49,6 +50,8 @@ const Navbar = () => {
         return "Zamówienia";
       case "/employee":
         return "Lista użytkowników";
+      case "/dashboard":
+        return "Dashboard";
       default:
         return "";
     }
@@ -83,6 +86,9 @@ const Navbar = () => {
               </Link>
               <Link to="/employee" className="m-3">
                 <FaUsers size={24} className="text-dark" />
+              </Link>
+              <Link to="/dashboard" className="m-3">
+                <FaChartBar size={24} className="text-dark" />
               </Link>
             </>
           )}
