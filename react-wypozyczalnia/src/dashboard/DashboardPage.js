@@ -40,7 +40,7 @@ const DashboardPage = () => {
     <Container>
       <Row>
         <Col>
-          <h2>Dashboard - Łączna liczba wypożyczeń</h2>
+          <h2>Łączna liczba wypożyczeń</h2>
           <ResponsiveContainer width="100%" height={400}>
             <BarChart
               data={stats}
@@ -58,7 +58,7 @@ const DashboardPage = () => {
       </Row>
       <Row>
         <Col>
-          <h2>Dashboard - Łączny Przychód</h2>
+          <h2>Łączny Przychód</h2>
           <ResponsiveContainer width="100%" height={400}>
             <BarChart
               data={stats}

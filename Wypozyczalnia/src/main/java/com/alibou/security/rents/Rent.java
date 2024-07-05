@@ -34,5 +34,6 @@ public class Rent {
     private Double rentPrice;
     private Date rentStart;
     private Date rentEnd;
+    private Boolean isReceived;
     private Boolean isCompleted;
 }

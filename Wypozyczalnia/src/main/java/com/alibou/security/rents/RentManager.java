@@ -73,4 +73,12 @@ public class RentManager {
     public List<RentCategoryStats> getRentStatsByCategory() {
         return rentRepository.findRentStatsByCategory();
     }
+
+    public Page<RentDTO> findAll(Pageable pageable) {
+        return rentRepository.findAll(pageable).map(this::convertToDTO);
+    }
+
+    private RentDTO convertToDTO(Rent rent) {
+        return new RentDTO(rent);
+    }
 }

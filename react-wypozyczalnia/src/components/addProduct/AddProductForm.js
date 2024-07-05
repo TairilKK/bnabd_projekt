@@ -6,7 +6,9 @@ import {
   Row,
   Container,
   ThemeProvider,
+  Image,
 } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -36,7 +38,9 @@ const AddProductForm = () => {
       })
       .catch((error) => {
         console.error("Błąd przy pobieraniu kategorii!", error);
-        toast.error("Błąd przy pobieraniu kategorii. Spróbuj ponownie.");
+        toast.error("Błąd przy pobieraniu kategorii. Spróbuj ponownie.", {
+          position: "bottom-right",
+        });
       });
   }, []);
 
@@ -58,7 +62,9 @@ const AddProductForm = () => {
       .post("http://localhost:8090/api/v1/products/add", formDataToSend)
       .then((response) => {
         console.log(response.data);
-        toast.success("Produkt dodany pomyślnie!");
+        toast.success("Produkt dodany pomyślnie!", {
+          position: "bottom-right",
+        });
         setFormData({
           brand: "",
           model: "",
@@ -74,7 +80,9 @@ const AddProductForm = () => {
       })
       .catch((error) => {
         console.error("Błąd przy dodawaniu produktu!", error);
-        toast.error("Błąd przy dodawaniu produktu. Spróbuj ponownie.");
+        toast.error("Błąd przy dodawaniu produktu. Spróbuj ponownie.", {
+          position: "bottom-right",
+        });
       });
   };
 
@@ -95,11 +103,39 @@ const AddProductForm = () => {
             maxWidth: "800px",
           }}
         >
-          <Row className="justify-content-md-center mb-5 pt-4">
-            <Col xs={12} md={12} className="text-center mb-4 mb-md-0">
+          <div
+            className="p-3 pt-5"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <div
+              className="justify-content-md-center"
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                textAlign: "center",
+              }}
+            >
+              <Link to="/">
+                <Image
+                  src="/logo.svg"
+                  className="img-fluid m-3"
+                  style={{
+                    width: "100px",
+                    minWidth: "10%",
+                    height: "auto",
+                  }}
+                />
+              </Link>
               <h2>Dodaj Produkt</h2>
-            </Col>
+            </div>
+          </div>
 
+          <Row className="justify-content-md-center mb-5 pt-4">
             <Col xs={12} md={12}>
               <Form onSubmit={handleSubmit}>
                 <Row>

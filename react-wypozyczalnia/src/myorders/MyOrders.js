@@ -72,7 +72,7 @@ const MyOrders = () => {
     const newSortDir = sortBy === field && sortDir === "asc" ? "desc" : "asc";
     setSortBy(field);
     setSortDir(newSortDir);
-    setCurrentPage(0); // Reset page to 0 when sort changes
+    setCurrentPage(0);
   };
 
   const handlePreviousPage = () => {
@@ -226,7 +226,7 @@ const MyOrders = () => {
               Poprzednia
             </Button>
             <span>
-              Strona {currentPage + 1} z {totalPages}
+              Strona {currentPage + 1} z {totalPages === 0 ? 1 : totalPages}
             </span>
             <Button
               onClick={handleNextPage}

@@ -110,7 +110,9 @@ const ItemDetail = () => {
 
       const available = await checkAvailability();
       if (!available) {
-        toast.error("Brak wystarczającej ilości sprzętu na wybrany termin.");
+        toast.error("Brak wystarczającej ilości sprzętu na wybrany termin.", {
+          position: "bottom-right",
+        });
         return;
       }
 
@@ -134,10 +136,14 @@ const ItemDetail = () => {
         }
       );
       console.log("Reservation successful:", response.data);
-      toast.success("Rezerwacja zakończona sukcesem!");
+      toast.success("Rezerwacja zakończona sukcesem!", {
+        position: "bottom-right",
+      });
     } catch (error) {
       console.error("Error making the reservation", error);
-      toast.error("Wystąpił błąd podczas dokonywania rezerwacji.");
+      toast.error("Wystąpił błąd podczas dokonywania rezerwacji.", {
+        position: "bottom-right",
+      });
     }
   };
 

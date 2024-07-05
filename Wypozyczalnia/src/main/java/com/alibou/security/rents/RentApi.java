@@ -5,6 +5,7 @@ import com.alibou.security.user.Role;
 import com.alibou.security.user.User;
 import com.alibou.security.user.UserService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -32,9 +33,11 @@ public class RentApi {
     }
 
     @GetMapping("/all")
-    public List<RentDTO> findAllRents() {
-        System.out.println("findAllRents called");
-        return rentManager.FindAll();
+    public Page<RentDTO> findAllRents(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return rentManager.findAll(pageable);
     }
 
     @GetMapping("/client")
@@ -113,8 +116,12 @@ public class RentApi {
         if (rent == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Rent not found");
         }
-
-        rent.setIsCompleted(request.getIsCompleted());
+        if (request.getIsRecived() != null) {
+            rent.setIsReceived(request.getIsRecived());
+        }
+        if (request.getIsCompleted() != null) {
+            rent.setIsCompleted(request.getIsCompleted());
+        }
         rentManager.save(rent);
 
         return ResponseEntity.ok(new RentDTO(rent));
